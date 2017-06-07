@@ -4,14 +4,13 @@
 # Description: Basic regressor function implemented
 
 from __future__ import print_function
-from logger import setup_logger
 import os
-import pdb
 
 
 class tracker:
     """tracker class"""
 
-    def __init__(self, show_intermediate_output=False):
+    def __init__(self, show_intermediate_output, logger):
         """TODO: to be defined. """
         self.show_intermediate_output = show_intermediate_output
+        self.logger = logger

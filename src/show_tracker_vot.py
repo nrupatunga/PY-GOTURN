@@ -8,6 +8,9 @@ import pdb
 from logger import setup_logger
 from regressor import regressor
 from loader_vot import loader_vot
+from tracker import tracker
+from tracker_manager import tracker_manager
+
 logger = setup_logger(logfile=None)
 
 ap = argparse.ArgumentParser()
@@ -19,6 +22,9 @@ args = vars(ap.parse_args())
 
 do_train = False
 objRegressor = regressor(args['prototxt'], args['model'], args['gpuID'], do_train, logger)
+objTracker = tracker(False, logger)
 objLoaderVot = loader_vot(args['input'], logger)
 video_frames, annotations = objLoaderVot.get_videos()
-pdb.set_trace()
+objTrackerVis = tracker_manager(video_frames, annotations, objRegressor, objTracker, logger)
+
+objTrackerVis.trackAll(0, 1)

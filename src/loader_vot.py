@@ -31,11 +31,10 @@ class loader_vot:
 
         """
         
-        pdb.set_trace()
         vot_folder = self.vot_folder
         sub_vot_dirs = self.find_subfolders(vot_folder)
         for vot_sub_dir in sub_vot_dirs:
-            list_of_frames = glob.glob(os.path.join(vot_folder, vot_sub_dir, '*.jpg'))
+            list_of_frames = sorted(glob.glob(os.path.join(vot_folder, vot_sub_dir, '*.jpg')))
             if not list_of_frames:
                 logger.error('vot folders should contain only .jpg images')
 
@@ -46,7 +45,7 @@ class loader_vot:
             with open(bbox_gt_file, 'r') as f:
                 for line in f:
                     co_ords = line.strip().split(',')
-                    co_ords = [float(co_ord) for co_ord in co_ords]
+                    co_ords = [int(float(co_ord)) for co_ord in co_ords]
                     ax, ay, bx, by, cx, cy, dx, dy = co_ords
                     x1 = min(ax, min(bx, min(cx, dx))) - 1
                     y1 = min(ay, min(by, min(cy, dy))) - 1

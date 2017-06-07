@@ -54,5 +54,5 @@ class regressor:
         if self.num_inputs != 1:
             logger.error('Network should take exactly one input')
 
-        if self.channels != 1 or self.channels != 3:
+        if self.channels != 1 and self.channels != 3:
             logger.error('Network should have 1 or 3 channels')
