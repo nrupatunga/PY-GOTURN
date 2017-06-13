@@ -6,6 +6,7 @@
 from __future__ import print_function
 import os
 from ..helper.BoundingBox import BoundingBox
+from video import video
 import glob
 import pdb
 
@@ -35,16 +36,15 @@ class loader_vot:
         sub_vot_dirs = self.find_subfolders(vot_folder)
         for vot_sub_dir in sub_vot_dirs:
             video_path = glob.glob(os.path.join(vot_folder, vot_sub_dir, '*.jpg'))
+            objVid = video(video_path)
             list_of_frames = sorted(video_path)
             if not list_of_frames:
                 logger.error('vot folders should contain only .jpg images')
 
-            self.videos[vot_sub_dir] = list_of_frames
-
+            objVid.all_frames = list_of_frames
             bbox_gt_file = os.path.join(vot_folder, vot_sub_dir, 'groundtruth.txt')
-            bbox_gt_coords = []
             with open(bbox_gt_file, 'r') as f:
-                for line in f:
+                for i, line in enumerate(f):
                     co_ords = line.strip().split(',')
                     co_ords = [int(float(co_ord)) for co_ord in co_ords]
                     ax, ay, bx, by, cx, cy, dx, dy = co_ords
@@ -53,10 +53,10 @@ class loader_vot:
                     x2 = max(ax, max(bx, max(cx, dx))) - 1
                     y2 = max(ay, max(by, max(cy, dy))) - 1
                     bbox = BoundingBox(x1, y1, x2, y2)
-                    bbox_gt_coords.append(bbox)
-            self.annotations[vot_sub_dir] = bbox_gt_coords
-
-        return self.videos, self.annotations
+                    bbox.frame_num = i
+                    objVid.annotations.append(bbox)
+            self.videos[vot_sub_dir] = [objVid.all_frames, objVid.annotations]
+        return self.videos
             
 
     def find_subfolders(self, vot_folder):

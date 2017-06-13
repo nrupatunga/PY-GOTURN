@@ -14,3 +14,5 @@ class BoundingBox:
         self.y1 = y1
         self.x2 = x2
         self.y2 = y2
+
+        self.frame_num = 0;

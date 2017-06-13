@@ -11,6 +11,8 @@ class video:
     def __init__(self, video_path):
         """TODO: to be defined1. """
         self.video_path = video_path
+        self.all_frames = []
+        self.annotations = []
 
 
     def loadframe(self, frame_idx, draw_bounding_box, load_only_annotation):
