@@ -5,6 +5,7 @@
 
 import argparse
 import pdb
+import setproctitle
 from ..logger.logger import setup_logger
 from ..network.regressor import regressor
 from ..loader.loader_vot import loader_vot
@@ -12,6 +13,7 @@ from ..tracker.tracker import tracker
 from ..tracker.tracker_manager import tracker_manager
 from ..loader.video import video
 
+setproctitle.setproctitle('SHOW_TRACKER_VOT')
 logger = setup_logger(logfile=None)
 
 ap = argparse.ArgumentParser()
@@ -25,7 +27,6 @@ do_train = False
 objRegressor = regressor(args['prototxt'], args['model'], args['gpuID'], do_train, logger)
 objTracker = tracker(False, logger) # Currently no idea why this class is needed, eventually we shall figure it out
 objLoaderVot = loader_vot(args['input'], logger)
-pdb.set_trace()
 videos = objLoaderVot.get_videos()
 objTrackerVis = tracker_manager(videos, objRegressor, objTracker, logger)
 objTrackerVis.trackAll(0, 1)

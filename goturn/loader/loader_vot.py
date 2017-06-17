@@ -32,6 +32,7 @@ class loader_vot:
 
         """
         
+        logger = self.logger
         vot_folder = self.vot_folder
         sub_vot_dirs = self.find_subfolders(vot_folder)
         for vot_sub_dir in sub_vot_dirs:
