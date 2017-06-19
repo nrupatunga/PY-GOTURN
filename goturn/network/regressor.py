@@ -26,7 +26,7 @@ class regressor:
         self.modified_params = False
         self.setupNetwork(deploy_proto, caffe_model, gpu_id, do_train)
 
-    def init(self, arg1):
+    def init(self):
         """init function
         """
         pass
