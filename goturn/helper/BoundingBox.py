@@ -50,3 +50,23 @@ class BoundingBox:
         output_width = self.kContextFactor * bbox_width
         
         return max(1.0, output_width)
+
+    def edge_spacing_x(self):
+        """TODO: Docstring for edge_spacing_x.
+        :returns: TODO
+
+        """
+        output_width = self.compute_output_width()
+        bbox_center_x = self.get_center_x()
+
+        return max(0.0, (output_width / 2) - bbox_center_x)
+
+    def edge_spacing_y(self):
+        """TODO: Docstring for edge_spacing_y.
+        :returns: TODO
+
+        """
+        output_height = self.compute_output_height()
+        bbox_center_y = self.get_center_y()
+
+        return max(0.0, (output_height / 2) - bbox_center_y)

@@ -29,4 +29,5 @@ class tracker:
         :returns: TODO
 
         """
-        target_pad = cropPadImage(self.bbox_prev_tight, self.image_prev)
+        target_pad, _, _,  _ = cropPadImage(self.bbox_prev_tight, self.image_prev)
+        cur_search_region, search_location, edge_spacing_x, edge_spacing_y = cropPadImage(self.bbox_curr_prior_tight, image_curr)

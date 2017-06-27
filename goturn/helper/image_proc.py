@@ -5,6 +5,8 @@
 
 import math
 import cv2
+import numpy as np
+import pdb
 from ..helper.BoundingBox import BoundingBox
 
 
@@ -20,6 +22,19 @@ def cropPadImage(bbox_tight, image):
     roi_height = min(image.shape[0], max(1.0, math.ceil(pad_image_location.y2 - pad_image_location.y1)))
 
     cropped_image = image[roi_bottom:roi_bottom + roi_height, roi_left:roi_left + roi_width]
+
+    output_width = max(math.ceil(bbox_tight.compute_output_width()), roi_width)
+    output_height = max(math.ceil(bbox_tight.compute_output_height()), roi_height)
+    if image.ndim > 2:
+        output_image = np.zeros((output_height, output_width, image.shape[2]), dtype=image.dtype)
+    else:
+        output_image = np.zeros((output_height, output_width), dtype=image.dtype)
+
+    edge_spacing_x = min(bbox_tight.edge_spacing_x(), (image.shape[1] - 1))
+    edge_spacing_y = min(bbox_tight.edge_spacing_y(), (image.shape[0] - 1))
+
+    output_image[edge_spacing_y:, edge_spacing_x:] = cropped_image
+    return output_image, pad_image_location, edge_spacing_x, edge_spacing_y
 
 
 def computeCropPadImageLocation(bbox_tight, image):
@@ -54,5 +69,5 @@ def computeCropPadImageLocation(bbox_tight, image):
 
     # Padded image location in the original image
     objPadImageLocation = BoundingBox(roi_left, roi_bottom, roi_left + roi_width, roi_bottom + roi_height)
-    
+   
     return objPadImageLocation

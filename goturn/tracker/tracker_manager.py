@@ -55,7 +55,7 @@ class tracker_manager:
                 bbox = annot_frames[i]
 
                 sMatImage = cv2.imread(frame)
-                # objTracker.track(sMatImage, objRegressor)
+                objTracker.track(sMatImage, objRegressor)
                 cv2.rectangle(sMatImage, (bbox.x1, bbox.y1), (bbox.x2, bbox.y2), (255, 0, 0), 2)
                 cv2.imshow('input', sMatImage)
                 cv2.waitKey(30)
