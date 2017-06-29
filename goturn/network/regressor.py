@@ -5,10 +5,10 @@
 
 from __future__ import print_function
 import os
-import pdb
 import glob
 import numpy as np
 import sys
+import cv2
 sys.path.insert(0, '/usr/local/caffe/python')
 import caffe
 
@@ -30,6 +30,33 @@ class regressor:
         """init function
         """
         pass
+
+    def preprocess(self, image):
+        """TODO: Docstring for preprocess.
+
+        :arg1: TODO
+        :returns: TODO
+
+        """
+        num_channels = self.channels
+        if num_channels == 1 and image.shape[2] == 3:
+            image_out = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+        elif num_channels == 1 and image.shape[2] == 4:
+            image_out = cv2.cvtColor(image, cv2.COLOR_BGRA2GRAY)
+        elif num_channels == 3 and image.shape[2] == 4:
+            image_out = cv2.cvtColor(image, cv2.COLOR_BGRA2BGR)
+        elif num_channels == 3 and image.shape[2] == 2:
+            image_out = cv2.cvtColor(image, cv2.COLOR_GRAY2BGR)
+        else:
+            image_out = image
+
+        if image_out.shape != (self.height, self.width, self.channels):
+            image_out = cv2.resize(image_out, (self.width, self.height), interpolation=cv2.INTER_CUBIC)
+
+        image_out = np.float32(image_out)
+        image_out -= np.array(self.mean)
+        image_out = np.transpose(image_out, [2, 0, 1])
+        return image_out
 
 
     def setupNetwork(self, deploy_proto, caffe_model, gpu_id, do_train):
@@ -54,6 +81,7 @@ class regressor:
             logger.info('Setting phase to test')
             net = caffe.Net(deploy_proto, caffe_model, caffe.TEST)
 
+        self.net = net
         self.num_inputs = net.blobs['image'].data[...].shape[0]
         self.channels = net.blobs['image'].data[...].shape[1]
         self.height = net.blobs['image'].data[...].shape[2]
@@ -64,3 +92,34 @@ class regressor:
 
         if self.channels != 1 and self.channels != 3:
             logger.error('Network should have 1 or 3 channels')
+
+    def regress(self, curr_search_region, target_region):
+        """TODO: Docstring for regress.
+        :returns: TODO
+
+        """
+        return self.estimate(curr_search_region, target_region)
+
+    def estimate(self, curr_search_region, target_region):
+        """TODO: Docstring for estimate.
+
+        :arg1: TODO
+        :returns: TODO
+
+        """
+        net = self.net
+        # reshape the inputs
+
+        net.blobs['image'].data.reshape(1, self.channels, self.height, self.width)
+        net.blobs['target'].data.reshape(1, self.channels, self.height, self.width)
+        net.blobs['bbox'].data.reshape(1, 4, 1, 1)
+
+        curr_search_region = self.preprocess(curr_search_region)
+        target_region = self.preprocess(target_region)
+
+        net.blobs['image'].data[...] = curr_search_region
+        net.blobs['target'].data[...] = target_region
+        net.forward()
+        bbox_estimate = net.blobs['fc8'].data
+
+        return bbox_estimate

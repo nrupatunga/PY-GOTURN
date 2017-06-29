@@ -16,6 +16,7 @@ class BoundingBox:
         self.y2 = y2
         self.frame_num = 0
         self.kContextFactor = 2
+        self.kScaleFactor = 10
 
     def get_center_x(self):
         """TODO: Docstring for get_center_x.
@@ -70,3 +71,31 @@ class BoundingBox:
         bbox_center_y = self.get_center_y()
 
         return max(0.0, (output_height / 2) - bbox_center_y)
+
+    def unscale(self, image):
+        """TODO: Docstring for unscale.
+        :returns: TODO
+
+        """
+        height = image.shape[0]
+        width = image.shape[1]
+
+        self.x1 = self.x1 / self.kScaleFactor
+        self.x2 = self.x2 / self.kScaleFactor
+        self.y1 = self.y1 / self.kScaleFactor
+        self.y2 = self.y2 / self.kScaleFactor
+
+        self.x1 = self.x1 * width
+        self.x2 = self.x2 * width
+        self.y1 = self.y1 * height
+        self.y2 = self.y2 * height
+
+    def uncenter(self, raw_image, search_location, edge_spacing_x, edge_spacing_y):
+        """TODO: Docstring for uncenter.
+        :returns: TODO
+
+        """
+        self.x1 = int(max(0.0, self.x1 + search_location.x1 - edge_spacing_x))
+        self.y1 = int(max(0.0, self.y1 + search_location.y1 - edge_spacing_y))
+        self.x2 = int(min(raw_image.shape[1], self.x2 + search_location.x1 - edge_spacing_x))
+        self.y2 = int(min(raw_image.shape[0], self.y2 + search_location.y1 - edge_spacing_y))

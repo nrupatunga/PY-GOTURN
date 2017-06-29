@@ -4,7 +4,6 @@
 # Description: tracker manager
 
 import cv2 
-import pdb
 
 class tracker_manager:
 
@@ -48,14 +47,16 @@ class tracker_manager:
             bbox_0 = annot_frames[0]
             sMatImage = cv2.imread(frame_0)
             objTracker.init(sMatImage, bbox_0, objRegressor)
-            cv2.rectangle(sMatImage, (bbox_0.x1, bbox_0.y1), (bbox_0.x2, bbox_0.y2), (255, 0, 0), 2)
-            cv2.imshow('input', sMatImage)
+            # cv2.rectangle(sMatImage, (bbox_0.x1, bbox_0.y1), (bbox_0.x2, bbox_0.y2), (255, 0, 0), 2)
+            # cv2.imshow('input', sMatImage)
             for i in xrange(1, num_frames):
                 frame = video_frames[i]
                 bbox = annot_frames[i]
+                sMatImage = cv2.rectangle(sMatImage, (bbox.x1, bbox.y1), (bbox.x2, bbox.y2), (255, 255, 255), 2)
 
                 sMatImage = cv2.imread(frame)
                 objTracker.track(sMatImage, objRegressor)
-                cv2.rectangle(sMatImage, (bbox.x1, bbox.y1), (bbox.x2, bbox.y2), (255, 0, 0), 2)
+                bbox = objTracker.bbox_curr_prior_tight
+                sMatImage = cv2.rectangle(sMatImage, (bbox.x1, bbox.y1), (bbox.x2, bbox.y2), (255, 0, 0), 2)
                 cv2.imshow('input', sMatImage)
-                cv2.waitKey(30)
+                cv2.waitKey(0)

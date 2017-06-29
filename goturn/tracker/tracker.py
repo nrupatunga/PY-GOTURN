@@ -5,7 +5,9 @@
 
 from __future__ import print_function
 from ..helper.image_proc import cropPadImage
+from ..helper.BoundingBox import BoundingBox
 import os
+import numpy as np
 
 
 class tracker:
@@ -31,3 +33,13 @@ class tracker:
         """
         target_pad, _, _,  _ = cropPadImage(self.bbox_prev_tight, self.image_prev)
         cur_search_region, search_location, edge_spacing_x, edge_spacing_y = cropPadImage(self.bbox_curr_prior_tight, image_curr)
+        bbox_estimate = objRegressor.regress(cur_search_region, target_pad)
+        bbox_estimate = BoundingBox(bbox_estimate[0, 0], bbox_estimate[0, 1], bbox_estimate[0, 2], bbox_estimate[0, 3])
+
+        # Inplace correction of bounding box
+        bbox_estimate.unscale(cur_search_region)
+        bbox_estimate.uncenter(image_curr, search_location, edge_spacing_x, edge_spacing_y)
+
+        self.image_prev = image_curr
+        self.bbox_prev_tight = bbox_estimate
+        self.bbox_curr_prior_tight = bbox_estimate
