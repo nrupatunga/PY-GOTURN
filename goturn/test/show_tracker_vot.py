@@ -4,7 +4,6 @@
 # Description: Test file for showing the tracker output
 
 import argparse
-import pdb
 import setproctitle
 from ..logger.logger import setup_logger
 from ..network.regressor import regressor

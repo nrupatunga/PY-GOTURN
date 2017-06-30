@@ -51,12 +51,12 @@ class tracker_manager:
             # cv2.imshow('input', sMatImage)
             for i in xrange(1, num_frames):
                 frame = video_frames[i]
-                bbox = annot_frames[i]
-                sMatImage = cv2.rectangle(sMatImage, (bbox.x1, bbox.y1), (bbox.x2, bbox.y2), (255, 255, 255), 2)
-
                 sMatImage = cv2.imread(frame)
-                objTracker.track(sMatImage, objRegressor)
-                bbox = objTracker.bbox_curr_prior_tight
-                sMatImage = cv2.rectangle(sMatImage, (bbox.x1, bbox.y1), (bbox.x2, bbox.y2), (255, 0, 0), 2)
-                cv2.imshow('input', sMatImage)
-                cv2.waitKey(0)
+                sMatImageDraw = sMatImage.copy()
+                bbox = annot_frames[i]
+                sMatImageDraw = cv2.rectangle(sMatImageDraw, (int(bbox.x1), int(bbox.y1)), (int(bbox.x2), int(bbox.y2)), (255, 255, 255), 2)
+                bbox = objTracker.track(sMatImage, objRegressor)
+                sMatImageDraw = cv2.rectangle(sMatImageDraw, (int(bbox.x1), int(bbox.y1)), (int(bbox.x2), int(bbox.y2)), (255, 0, 0), 2)
+
+                cv2.imshow('input', sMatImageDraw)
+                cv2.waitKey(30)

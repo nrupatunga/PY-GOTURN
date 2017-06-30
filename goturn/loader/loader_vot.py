@@ -8,7 +8,6 @@ import os
 from ..helper.BoundingBox import BoundingBox
 from video import video
 import glob
-import pdb
 
 
 class loader_vot:
@@ -47,7 +46,7 @@ class loader_vot:
             with open(bbox_gt_file, 'r') as f:
                 for i, line in enumerate(f):
                     co_ords = line.strip().split(',')
-                    co_ords = [int(float(co_ord)) for co_ord in co_ords]
+                    co_ords = [(float(co_ord)) for co_ord in co_ords]
                     ax, ay, bx, by, cx, cy, dx, dy = co_ords
                     x1 = min(ax, min(bx, min(cx, dx))) - 1
                     y1 = min(ay, min(by, min(cy, dy))) - 1

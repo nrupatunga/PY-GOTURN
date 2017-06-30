@@ -1,4 +1,4 @@
-# Date: Monday 19 June 2017 12:51:03 PM IST
+# Date: Friday 30 June 2017 05:59:07 PM IST
 # Email: nrupatunga@whodat.com
 # Name: Nrupatunga
 # Description: Image processing functions
@@ -6,7 +6,6 @@
 import math
 import cv2
 import numpy as np
-import pdb
 from ..helper.BoundingBox import BoundingBox
 
 
@@ -21,19 +20,19 @@ def cropPadImage(bbox_tight, image):
     roi_width = min(image.shape[1], max(1.0, math.ceil(pad_image_location.x2 - pad_image_location.x1)))
     roi_height = min(image.shape[0], max(1.0, math.ceil(pad_image_location.y2 - pad_image_location.y1)))
 
-    cropped_image = image[roi_bottom:roi_bottom + roi_height, roi_left:roi_left + roi_width]
-
+    cropped_image = image[int(roi_bottom):int(roi_bottom + roi_height), int(roi_left):int(roi_left + roi_width)]
     output_width = max(math.ceil(bbox_tight.compute_output_width()), roi_width)
     output_height = max(math.ceil(bbox_tight.compute_output_height()), roi_height)
     if image.ndim > 2:
-        output_image = np.zeros((output_height, output_width, image.shape[2]), dtype=image.dtype)
+        output_image = np.zeros((int(output_height), int(output_width), image.shape[2]), dtype=image.dtype)
     else:
-        output_image = np.zeros((output_height, output_width), dtype=image.dtype)
+        output_image = np.zeros((int(output_height), int(output_width)), dtype=image.dtype)
 
     edge_spacing_x = min(bbox_tight.edge_spacing_x(), (image.shape[1] - 1))
     edge_spacing_y = min(bbox_tight.edge_spacing_y(), (image.shape[0] - 1))
-
-    output_image[edge_spacing_y:, edge_spacing_x:] = cropped_image
+    
+    # rounding should be done to match the width and height
+    output_image[int(edge_spacing_y):int(edge_spacing_y) + cropped_image.shape[0], int(edge_spacing_x):int(edge_spacing_x) + cropped_image.shape[1]] = cropped_image
     return output_image, pad_image_location, edge_spacing_x, edge_spacing_y
 
 

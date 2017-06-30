@@ -95,7 +95,7 @@ class BoundingBox:
         :returns: TODO
 
         """
-        self.x1 = int(max(0.0, self.x1 + search_location.x1 - edge_spacing_x))
-        self.y1 = int(max(0.0, self.y1 + search_location.y1 - edge_spacing_y))
-        self.x2 = int(min(raw_image.shape[1], self.x2 + search_location.x1 - edge_spacing_x))
-        self.y2 = int(min(raw_image.shape[0], self.y2 + search_location.y1 - edge_spacing_y))
+        self.x1 = max(0.0, self.x1 + search_location.x1 - edge_spacing_x)
+        self.y1 = max(0.0, self.y1 + search_location.y1 - edge_spacing_y)
+        self.x2 = min(raw_image.shape[1], self.x2 + search_location.x1 - edge_spacing_x)
+        self.y2 = min(raw_image.shape[0], self.y2 + search_location.y1 - edge_spacing_y)
