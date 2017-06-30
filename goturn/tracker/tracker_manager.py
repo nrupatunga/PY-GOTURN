@@ -41,14 +41,11 @@ class tracker_manager:
 
             num_frames = min(len(video_frames), len(annot_frames))
 
-            # Get the first frame of this video with the intial
-            # ground-truth bounding box
+            # Get the first frame of this video with the intial ground-truth bounding box
             frame_0 = video_frames[0]
             bbox_0 = annot_frames[0]
             sMatImage = cv2.imread(frame_0)
             objTracker.init(sMatImage, bbox_0, objRegressor)
-            # cv2.rectangle(sMatImage, (bbox_0.x1, bbox_0.y1), (bbox_0.x2, bbox_0.y2), (255, 0, 0), 2)
-            # cv2.imshow('input', sMatImage)
             for i in xrange(1, num_frames):
                 frame = video_frames[i]
                 sMatImage = cv2.imread(frame)
@@ -57,6 +54,5 @@ class tracker_manager:
                 sMatImageDraw = cv2.rectangle(sMatImageDraw, (int(bbox.x1), int(bbox.y1)), (int(bbox.x2), int(bbox.y2)), (255, 255, 255), 2)
                 bbox = objTracker.track(sMatImage, objRegressor)
                 sMatImageDraw = cv2.rectangle(sMatImageDraw, (int(bbox.x1), int(bbox.y1)), (int(bbox.x2), int(bbox.y2)), (255, 0, 0), 2)
-
-                cv2.imshow('input', sMatImageDraw)
-                cv2.waitKey(30)
+                cv2.imshow('Results', sMatImageDraw)
+                cv2.waitKey(10)
