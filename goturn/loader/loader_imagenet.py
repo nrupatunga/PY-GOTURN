@@ -4,15 +4,19 @@
 # Description: loading Imagenet dataset
 
 from __future__ import print_function
+import sys
+sys.path.append('../logger/')
 import os
 import pdb
 import glob
 from annotation import annotation
 import xml.etree.ElementTree as ET
+from logger import setup_logger
+
 
 kMaxRatio = 0.66
 
-class loader_imagenetdet:
+class loader_imagenet:
 
     """Docstring for loader_imagenetdet. """
 
@@ -25,7 +29,7 @@ class loader_imagenetdet:
         if not os.path.isdir(imagenet_folder):
             logger.error('{} is not a valid directory'.format(vot_folder))
 
-    def get_videos(self):
+    def loaderImageNetDet(self):
         """TODO: Docstring for get_videos.
         :returns: TODO
 
@@ -33,11 +37,21 @@ class loader_imagenetdet:
         logger = self.logger
         imagenet_folder = self.imagenet_folder
         imagenet_subdirs = sorted(self.find_subfolders(self.annotations_folder))
+        num_annotations = 0
+        list_list_of_annotations = []
 
-        for imgnet_sub_folder in imagenet_subdirs:
+        for i, imgnet_sub_folder in enumerate(imagenet_subdirs):
             annotations_files = sorted(glob.glob(os.path.join(self.annotations_folder, imgnet_sub_folder, '*.xml')))
+            logger.info('Loading {}/{} - annotation file from folder = {}'.format(i+1, len(imagenet_subdirs), imgnet_sub_folder))
             for ann in annotations_files:
-                self.load_annotation_file(ann)
+                list_of_annotations, num_ann_curr = self.load_annotation_file(ann)
+                num_annotations = num_annotations + num_ann_curr
+                if len(list_of_annotations) == 0:
+                    continue
+                list_list_of_annotations.append(list_list_of_annotations)
+
+        logger.info('Found {} annotations from {} images'.format(num_annotations, len(list_list_of_annotations)))
+        return list_list_of_annotations
         
 
     def find_subfolders(self, imagenet_folder):
@@ -54,6 +68,8 @@ class loader_imagenetdet:
         :returns: TODO
 
         """
+        list_of_annotations = []
+        num_annotations = 0
         root = ET.parse(annotation_file).getroot()
         folder = root.find('folder').text
         filename = root.find('filename').text
@@ -74,9 +90,21 @@ class loader_imagenetdet:
             if width > (kMaxRatio * disp_width) or height > (kMaxRatio * disp_height):
                 continue
 
-        pdb.set_trace()
+            if ((xmin < 0) or (ymin < 0) or (xmax <= xmin) or (ymax <= ymin)):
+                continue
+
+            objAnnotation = annotation()
+            objAnnotation.setbbox(xmin, xmax, ymin, ymax)
+            objAnnotation.setWidthHeight(disp_width, disp_height)
+            objAnnotation.setImagePath(os.path.join(folder, filename))
+            list_of_annotations.append(objAnnotation)
+            num_annotations = num_annotations + 1
+
+        return list_of_annotations, num_annotations
+
 
 
 if '__main__' == __name__:
-    objLoaderImgNet = loader_imagenetdet('/media/nrupatunga/data/datasets/ILSVRC2014/ILSVRC2014_DET_train/', '/media/nrupatunga/data/datasets/ILSVRC2014/ILSVRC2014_DET_bbox_train/', None)
-    objLoaderImgNet.get_videos()
+    logger = setup_logger(logfile=None)
+    objLoaderImgNet = loader_imagenet('/media/nrupatunga/data/datasets/ILSVRC2014/ILSVRC2014_DET_train/', '/media/nrupatunga/data/datasets/ILSVRC2014/ILSVRC2014_DET_bbox_train/', logger)
+    list_list_of_annotations = objLoaderImgNet.loaderImageNetDet()
