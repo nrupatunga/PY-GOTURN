@@ -7,7 +7,6 @@ from __future__ import print_function
 import sys
 sys.path.append('../logger/')
 import os
-import pdb
 import glob
 from annotation import annotation
 import xml.etree.ElementTree as ET
@@ -38,7 +37,7 @@ class loader_imagenet:
         imagenet_folder = self.imagenet_folder
         imagenet_subdirs = sorted(self.find_subfolders(self.annotations_folder))
         num_annotations = 0
-        list_list_of_annotations = []
+        dict_list_of_annotations = {}
 
         for i, imgnet_sub_folder in enumerate(imagenet_subdirs):
             annotations_files = sorted(glob.glob(os.path.join(self.annotations_folder, imgnet_sub_folder, '*.xml')))
@@ -48,10 +47,10 @@ class loader_imagenet:
                 num_annotations = num_annotations + num_ann_curr
                 if len(list_of_annotations) == 0:
                     continue
-                list_list_of_annotations.append(list_list_of_annotations)
+                dict_list_of_annotations[imgnet_sub_folder] = list_of_annotations
 
-        logger.info('Found {} annotations from {} images'.format(num_annotations, len(list_list_of_annotations)))
-        return list_list_of_annotations
+        logger.info('Found {} annotations from {} images'.format(num_annotations, len(dict_list_of_annotations)))
+        return dict_list_of_annotations
         
 
     def find_subfolders(self, imagenet_folder):
@@ -107,4 +106,4 @@ class loader_imagenet:
 if '__main__' == __name__:
     logger = setup_logger(logfile=None)
     objLoaderImgNet = loader_imagenet('/media/nrupatunga/data/datasets/ILSVRC2014/ILSVRC2014_DET_train/', '/media/nrupatunga/data/datasets/ILSVRC2014/ILSVRC2014_DET_bbox_train/', logger)
-    list_list_of_annotations = objLoaderImgNet.loaderImageNetDet()
+    dict_list_of_annotations = objLoaderImgNet.loaderImageNetDet()
