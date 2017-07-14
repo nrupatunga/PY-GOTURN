@@ -26,7 +26,7 @@ class loader_imagenet:
         self.imagenet_folder = imagenet_folder
         self.annotations_folder = annotations_folder
         if not os.path.isdir(imagenet_folder):
-            logger.error('{} is not a valid directory'.format(vot_folder))
+            logger.error('{} is not a valid directory'.format(imagenet_folder))
 
     def loaderImageNetDet(self):
         """TODO: Docstring for get_videos.
@@ -107,3 +107,5 @@ if '__main__' == __name__:
     logger = setup_logger(logfile=None)
     objLoaderImgNet = loader_imagenet('/media/nrupatunga/data/datasets/ILSVRC2014/ILSVRC2014_DET_train/', '/media/nrupatunga/data/datasets/ILSVRC2014/ILSVRC2014_DET_bbox_train/', logger)
     dict_list_of_annotations = objLoaderImgNet.loaderImageNetDet()
+    import pdb
+    pdb.set_trace()

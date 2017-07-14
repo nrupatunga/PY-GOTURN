@@ -4,6 +4,15 @@
 # Description: Basic video helper functions
 
 
+class frame:
+
+    """Docstring for frame. """
+    def __init__(self, frame_num, bbox):
+        """TODO: to be defined1. """
+        self.frame_num = frame_num
+        self.bbox = bbox
+
+
 class video:
 
     """Docstring for video. """
