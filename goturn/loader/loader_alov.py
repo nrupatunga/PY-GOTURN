@@ -85,6 +85,9 @@ class loader_alov:
 
         video_name = video_path.split('/')[-1]
         self.alov_videos[video_name] = objVideo
+        if alov_sub_folder not in self.category.keys():
+            self.category[alov_sub_folder] = []
+
         self.category[alov_sub_folder].append(self.alov_videos[video_name])
         
 if '__main__' == __name__:
