@@ -61,13 +61,12 @@ class loader_alov:
 
     def load_annotation_file(self, alov_sub_folder, annotation_file):
 
-        video_path = os.path.join(self.alov_folder, alov_sub_folder, annotation_file.split('.')[0])
+        video_path = os.path.join(self.alov_folder, alov_sub_folder, annotation_file.split('/')[-1].split('.')[0])
 
         objVideo = video(video_path)
         all_frames = glob.glob(os.path.join(video_path, '*.jpg'))
         objVideo.all_frames = sorted(all_frames)
 
-        annotation_file = os.path.join(video_path, annotation_file)
         with open(annotation_file, 'r') as f:
             data = f.read().rstrip().split('\n')
             for bb in data: 
@@ -89,10 +88,45 @@ class loader_alov:
             self.category[alov_sub_folder] = []
 
         self.category[alov_sub_folder].append(self.alov_videos[video_name])
+
+    def get_videos(self, isTrain=True, val_ratio=0.2):
+        """TODO: Docstring for get_videos.
+        :returns: TODO
+        """
+
+        videos = []
+        logger = self.logger
+        num_categories = len(self.category)
+        category = self.category
+        keys = sorted(category.keys())
+        for i in range(num_categories):
+            category_video = category[keys[i]]
+            num_videos = len(category_video)
+            num_val = int(val_ratio * num_videos)
+            num_train = num_videos - num_val
+
+            if isTrain:
+                start_num = 0
+                end_num = num_train - 1
+            else:
+                start_num = num_train
+                end_num = num_videos - 1
+
+            for i in range(start_num, end_num):
+                video = category_video[i]
+                videos.append(video)
+
+        num_annotations = 0
+        for i, _ in enumerate(videos):
+            import pdb
+            pdb.set_trace()
+            num_annotations = num_annotations + len(videos[i].annotations)
+
+        logger.info('Total annotated video frames: {}'.format(num_annotations))
+
         
 if '__main__' == __name__:
     logger = setup_logger(logfile=None)
     objLoaderAlov = loader_alov('/media/nrupatunga/data/datasets/VOT-extract/images/', '/media/nrupatunga/data/datasets/VOT-extract/gt/', logger)
     objLoaderAlov.loaderAlov()
-    import pdb
-    pdb.set_trace()
+    objLoaderAlov.get_videos()
