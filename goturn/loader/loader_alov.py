@@ -3,7 +3,6 @@
 # Name: Nrupatunga
 # Description: loading Alov dataset
 
-from __future__ import print_function
 import sys
 sys.path.append('../logger/')
 sys.path.append('../helper/')
@@ -45,7 +44,7 @@ class loader_alov:
 
         for i, alov_sub_folder in enumerate(alov_subdirs):
             annotations_files = sorted(glob.glob(os.path.join(self.annotations_folder, alov_sub_folder, '*.ann')))
-            logger.info('Loading {}/{} - annotation file from folder = {}'.format(i+1, len(alov_subdirs), alov_sub_folder))
+            logger.info('Loading {:>3} of {:>3} - annotation file from folder = {:>4}'.format(i+1, len(alov_subdirs), alov_sub_folder))
 
             for ann in annotations_files:
                 self.load_annotation_file(alov_sub_folder, ann)
@@ -99,6 +98,7 @@ class loader_alov:
         num_categories = len(self.category)
         category = self.category
         keys = sorted(category.keys())
+        count = 0
         for i in range(num_categories):
             category_video = category[keys[i]]
             num_videos = len(category_video)
@@ -112,14 +112,12 @@ class loader_alov:
                 start_num = num_train
                 end_num = num_videos - 1
 
-            for i in range(start_num, end_num):
+            for i in range(start_num, end_num + 1):
                 video = category_video[i]
                 videos.append(video)
 
         num_annotations = 0
         for i, _ in enumerate(videos):
-            import pdb
-            pdb.set_trace()
             num_annotations = num_annotations + len(videos[i].annotations)
 
         logger.info('Total annotated video frames: {}'.format(num_annotations))
