@@ -15,10 +15,10 @@ import caffe
 class regressor:
     """Regressor Class"""
 
-    def __init__(self, deploy_proto, caffe_model, gpu_id, do_train, logger):
+    def __init__(self, deploy_proto, caffe_model, gpu_id, num_inputs, do_train, logger):
         """TODO: to be defined"""
 
-        self.num_inputs = 2
+        self.num_inputs = num_inputs
         self.logger = logger
         self.caffe_model_ = caffe_model
         self.modified_params_ = False
