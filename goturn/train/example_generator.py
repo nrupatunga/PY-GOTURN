@@ -7,9 +7,10 @@ class example_generator:
 
     """Docstring for example_generator. """
 
-    def __init__(self, lamda_shift, lamda_scale, min_scale, max_scale):
+    def __init__(self, lamda_shift, lamda_scale, min_scale, max_scale, logger):
         """TODO: to be defined1. """
         self.lamda_shift = lamda_shift
         self.lamda_scale = lamda_scale
         self.min_scale = min_scale
         self.max_scale= max_scale
+        self.logger = logger

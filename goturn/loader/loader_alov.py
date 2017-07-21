@@ -4,16 +4,16 @@
 # Description: loading Alov dataset
 
 import sys
-sys.path.append('../logger/')
-sys.path.append('../helper/')
+# sys.path.append('../logger/')
+# sys.path.append('../helper/')
 import os
 import glob
 from annotation import annotation
 from video import video
 from video import frame
 import xml.etree.ElementTree as ET
-from logger import setup_logger
-from BoundingBox import BoundingBox
+from ..logger.logger import setup_logger
+from ..helper.BoundingBox import BoundingBox
 
 
 class loader_alov:
@@ -121,6 +121,8 @@ class loader_alov:
             num_annotations = num_annotations + len(videos[i].annotations)
 
         logger.info('Total annotated video frames: {}'.format(num_annotations))
+
+        return videos
 
         
 if '__main__' == __name__:

@@ -5,12 +5,11 @@
 
 from __future__ import print_function
 import sys
-sys.path.append('../logger/')
 import os
 import glob
 from annotation import annotation
 import xml.etree.ElementTree as ET
-from logger import setup_logger
+from ..logger.logger import setup_logger
 
 
 kMaxRatio = 0.66

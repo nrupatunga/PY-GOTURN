@@ -4,8 +4,7 @@
 # Description: annotations
 
 import sys
-sys.path.append('../helper/')
-from BoundingBox import BoundingBox
+from ..helper.BoundingBox import BoundingBox
 
 class annotation:
 
