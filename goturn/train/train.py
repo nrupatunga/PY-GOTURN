@@ -11,11 +11,13 @@ from ..loader.loader_imagenet import loader_imagenet
 from ..loader.loader_alov import loader_alov
 from ..train.example_generator import example_generator
 from ..network.regressor_train import regressor_train
+from ..tracker.tracker_trainer import tracker_trainer
 import sys
 sys.path.insert(0, '/usr/local/caffe/python')
 import os
 import caffe
 import numpy as np
+import pdb
 
 setproctitle.setproctitle('TRAIN_TRACKER_IMAGENET_ALOV')
 logger = setup_logger(logfile=None)
@@ -36,10 +38,23 @@ ap.add_argument("-gpu_id", "--gpu_id", required = True, help = "gpu id")
 RANDOM_SEED = 800
 GPU_ONLY = True
 
+
+def train_image(image_loader, images, tracker_trainer):
+    """TODO: Docstring for main.
+    """
+    curr_image = np.random.randint(0, len(images))
+    list_annotations = images[curr_image]
+    curr_ann = np.random.randint(0, len(list_annotations))
+
+    image_loader.load_annotation(curr_image, curr_ann)
+    cropPadImage()
+
+
 def main(args):
     """TODO: Docstring for main.
     """
     # Fix random seeds (numpy and caffe) for reproducibility
+    logger.info('Initializing caffe..')
     np.random.seed(RANDOM_SEED)
     caffe.set_random_seed(RANDOM_SEED)
 
@@ -49,6 +64,7 @@ def main(args):
     else:
         caffe.set_mode_cpu()
 
+    logger.info('Loading training data')
     # Load imagenet training images and annotations
     imagenet_folder = os.path.join(args['imagenet'], 'ILSVRC2014_DET_train')
     imagenet_annotations_folder = os.path.join(args['imagenet'], 'ILSVRC2014_DET_bbox_train')
@@ -65,6 +81,9 @@ def main(args):
     # create example generator and setup the network
     objExampleGen = example_generator(float(args['lamda_shift']), float(args['lamda_scale']), float(args['min_scale']), float(args['max_scale']), logger)
     objRegTrain = regressor_train(args['train_prototxt'], args['init_caffemodel'], int(args['gpu_id']), args['solver_prototxt'], logger) 
+    objTrackTrainer = tracker_trainer(objExampleGen, objRegTrain, logger)
+
+    train_image(objLoaderImgNet, train_imagenet_images, objTrackTrainer)
 
 
 if __name__ == '__main__':

@@ -3,6 +3,9 @@
 # Name: Nrupatunga
 # Description: generating training examples for training
 
+from ..helper.image_proc import image_proc
+
+
 class example_generator:
 
     """Docstring for example_generator. """
@@ -14,3 +17,7 @@ class example_generator:
         self.min_scale = min_scale
         self.max_scale= max_scale
         self.logger = logger
+
+
+    def reset(self, bbox_curr, bbox_prev, img_curr, img_prev):
+        """TODO: to be defined1. """

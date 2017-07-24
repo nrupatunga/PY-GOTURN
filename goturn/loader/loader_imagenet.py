@@ -6,6 +6,7 @@
 from __future__ import print_function
 import sys
 import os
+import cv2
 import glob
 from annotation import annotation
 import xml.etree.ElementTree as ET
@@ -36,7 +37,7 @@ class loader_imagenet:
         imagenet_folder = self.imagenet_folder
         imagenet_subdirs = sorted(self.find_subfolders(self.annotations_folder))
         num_annotations = 0
-        dict_list_of_annotations = {}
+        list_of_annotations_out = []
 
         for i, imgnet_sub_folder in enumerate(imagenet_subdirs):
             annotations_files = sorted(glob.glob(os.path.join(self.annotations_folder, imgnet_sub_folder, '*.xml')))
@@ -46,10 +47,15 @@ class loader_imagenet:
                 num_annotations = num_annotations + num_ann_curr
                 if len(list_of_annotations) == 0:
                     continue
-                dict_list_of_annotations[imgnet_sub_folder] = list_of_annotations
+                list_of_annotations_out.append(list_of_annotations)
 
-        logger.info('Found {} annotations from {} images'.format(num_annotations, len(dict_list_of_annotations)))
-        return dict_list_of_annotations
+        logger.info('Found {} annotations from {} images'.format(num_annotations, len(list_of_annotations_out)))
+
+        # save it for future use
+        self.list_of_annotations_out = list_of_annotations_out
+        self.num_annotations = num_annotations
+
+        return list_of_annotations_out
         
 
     def find_subfolders(self, imagenet_folder):
@@ -100,11 +106,44 @@ class loader_imagenet:
 
         return list_of_annotations, num_annotations
 
+    def load_annotation(self, image_num, annotation_num):
+        """TODO: Docstring for load_annotation.
+        :returns: TODO
+
+        """
+        logger = self.logger
+
+        images = self.list_of_annotations_out
+        list_annotations = images[image_num]
+        random_ann = list_annotations[annotation_num]
+
+        img_path = os.path.join(self.imagenet_folder, random_ann.image_path + '.JPEG')
+        image = cv2.imread(img_path)
+
+        img_height = image.shape[0]
+        img_width = image.shape[1]
+
+        sc_factor_1 = 1.0
+        if img_height != random_ann.disp_height or img_width != random_ann.disp_width:
+            logger.info('Image Number = {}, Annotation Number = {}, Image file = {}'.format(image_num, annotation_num, img_path))
+            logger.info('Image Size = {} x {}'.format(img_width, img_height))
+            logger.info('Display Size = {} x {}'.format(random_ann.disp_width, random_ann.disp_height))
+
+            sc_factor_1 = img_height / random_ann.disp_height
+            sc_factor_2 = img_width / random_ann.disp_width
+
+            logger.info('Factor: {} {}'.format(sc_factor_1, sc_factor_2))
+
+        bbox = random_ann.bbox
+        bbox.x1 = bbox.x1 * sc_factor_1
+        bbox.x2 = bbox.x2 * sc_factor_1
+        bbox.y1 = bbox.y1 * sc_factor_1
+        bbox.y2 = bbox.y2 * sc_factor_1
+
+        return image, bbox
 
 
 if '__main__' == __name__:
     logger = setup_logger(logfile=None)
     objLoaderImgNet = loader_imagenet('/media/nrupatunga/data/datasets/ILSVRC2014/ILSVRC2014_DET_train/', '/media/nrupatunga/data/datasets/ILSVRC2014/ILSVRC2014_DET_bbox_train/', logger)
     dict_list_of_annotations = objLoaderImgNet.loaderImageNetDet()
-    import pdb
-    pdb.set_trace()
