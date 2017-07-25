@@ -3,7 +3,7 @@
 # Name: Nrupatunga
 # Description: generating training examples for training
 
-from ..helper.image_proc import image_proc
+from ..helper.image_proc import cropPadImage
 
 
 class example_generator:

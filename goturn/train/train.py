@@ -47,7 +47,7 @@ def train_image(image_loader, images, tracker_trainer):
     curr_ann = np.random.randint(0, len(list_annotations))
 
     image_loader.load_annotation(curr_image, curr_ann)
-    cropPadImage()
+    # cropPadImage()
 
 
 def main(args):
