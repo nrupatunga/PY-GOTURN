@@ -17,7 +17,6 @@ sys.path.insert(0, '/usr/local/caffe/python')
 import os
 import caffe
 import numpy as np
-import pdb
 
 setproctitle.setproctitle('TRAIN_TRACKER_IMAGENET_ALOV')
 logger = setup_logger(logfile=None)
@@ -46,8 +45,8 @@ def train_image(image_loader, images, tracker_trainer):
     list_annotations = images[curr_image]
     curr_ann = np.random.randint(0, len(list_annotations))
 
-    image_loader.load_annotation(curr_image, curr_ann)
-    # cropPadImage()
+    image, bbox = image_loader.load_annotation(curr_image, curr_ann)
+    tracker_trainer.train(image, image, bbox, bbox)
 
 
 def main(args):

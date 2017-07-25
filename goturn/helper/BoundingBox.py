@@ -99,3 +99,34 @@ class BoundingBox:
         self.y1 = max(0.0, self.y1 + search_location.y1 - edge_spacing_y)
         self.x2 = min(raw_image.shape[1], self.x2 + search_location.x1 - edge_spacing_x)
         self.y2 = min(raw_image.shape[0], self.y2 + search_location.y1 - edge_spacing_y)
+
+    def recenter(self, search_loc, edge_spacing_x, edge_spacing_y, bbox_gt_recentered):
+        """TODO: Docstring for recenter.
+        :returns: TODO
+
+        """
+        bbox_gt_recentered.x1 = self.x1 - search_loc.x1 + edge_spacing_x
+        bbox_gt_recentered.y1 = self.y1 - search_loc.y1 + edge_spacing_y
+        bbox_gt_recentered.x2 = self.x2 - search_loc.x1 + edge_spacing_x
+        bbox_gt_recentered.y2 = self.y2 - search_loc.y1 + edge_spacing_y
+
+        return bbox_gt_recentered
+
+    def scale(self, image):
+        """TODO: Docstring for scale.
+        :returns: TODO
+
+        """
+        height = image.shape[0]
+        width = image.shape[1]
+
+        self.x1 = self.x1 / width
+        self.y1 = self.y1 / height
+        self.x2 = self.x2 / width
+        self.y2 = self.y2 / height
+
+        self.x1 = self.x1 * self.kScaleFactor
+        self.y1 = self.y1 * self.kScaleFactor
+        self.x2 = self.x2 * self.kScaleFactor
+        self.y2 = self.y2 * self.kScaleFactor
+
