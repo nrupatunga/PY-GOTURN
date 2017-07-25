@@ -117,7 +117,22 @@ class loader_imagenet:
         list_annotations = images[image_num]
         random_ann = list_annotations[annotation_num]
 
+
         img_path = os.path.join(self.imagenet_folder, random_ann.image_path + '.JPEG')
+        import pdb
+        pdb.set_trace()
+
+        debug = 1
+        if debug == 1:
+            img_path = "/media/nrupatunga/data/datasets/ILSVRC2014/ILSVRC2014_DET_train/n04118538/n04118538_3385.JPEG"
+            random_ann.bbox.x1 = 416
+            random_ann.bbox.y1 = 29
+            random_ann.bbox.x2 = 469
+            random_ann.bbox.y2 = 71
+            random_ann.disp_height = 281
+            random_ann.disp_width = 500
+
+
         image = cv2.imread(img_path)
 
         img_height = image.shape[0]
