@@ -3,6 +3,7 @@
 # Name: Nrupatunga
 # Description: bounding box class
 
+from ..helper.helper import sample_exp_two_sides, sample_rand_uniform
 
 class BoundingBox:
     """Docstring for BoundingBox. """
@@ -149,4 +150,26 @@ class BoundingBox:
         :returns: TODO
 
         """
-        pass
+        width = self.get_width()
+        height = self.get_height()
+
+        center_x = self.get_center_x()
+        center_y = self.get_center_y()
+
+        kMaxNumTries = 10
+
+        new_width = 0
+        num_tries_width = 0
+        while (new_width < 0) or (new_width > image.shape[1] - 1) and (num_tries_width < kMaxNumTries):
+            if shift_motion_model:
+                width_scale_factor = max(min_scale, min(max_scale, sample_exp_two_sides(lambda_scale_frac)))
+            else:
+                rand_num = sample_rand_uniform()
+                width_scale_factor = rand_num * (max_scale - min_scale) + min_scale
+
+            new_width = width * (1 + width_scale_factor)
+            new_width = max(1.0, min(image.shape[1] - 1), new_width)
+            num_tries_width = num_tries_width + 1
+
+        new_height = 0
+
