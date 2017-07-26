@@ -168,8 +168,18 @@ class BoundingBox:
                 width_scale_factor = rand_num * (max_scale - min_scale) + min_scale
 
             new_width = width * (1 + width_scale_factor)
-            new_width = max(1.0, min(image.shape[1] - 1), new_width)
+            new_width = max(1.0, min((image.shape[1] - 1), new_width))
             num_tries_width = num_tries_width + 1
 
         new_height = 0
+        num_tries_height = 0
+        while (new_height < 0) or (new_height > image.shape[0] - 1) and (num_tries_height < kMaxNumTries):
+            if shift_motion_model:
+                height_scale_factor = max(min_scale, min(max_scale, sample_exp_two_sides(lambda_scale_frac)))
+            else:
+                rand_num = sample_rand_uniform()
+                height_scale_factor = rand_num * (max_scale - min_scale) + min_scale
 
+            new_height = height * ( 1 + height_scale_factor )
+            new_height = max(1.0, min((image.shape[0] - 1), new_height))
+            num_tries_height = num_tries_height + 1
