@@ -130,3 +130,23 @@ class BoundingBox:
         self.x2 = self.x2 * self.kScaleFactor
         self.y2 = self.y2 * self.kScaleFactor
 
+    def get_width(self):
+        """TODO: Docstring for get_width.
+        :returns: TODO
+
+        """
+        return (self.x2 - self.x1)
+
+    def get_height(self):
+        """TODO: Docstring for get_width.
+        :returns: TODO
+
+        """
+        return (self.y2 - self.y1)
+
+    def shift(self, image, lambda_scale_frac, lambda_shift_frac, min_scale, max_scale, shift_motion_model):
+        """TODO: Docstring for shift.
+        :returns: TODO
+
+        """
+        pass

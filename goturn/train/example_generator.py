@@ -6,6 +6,17 @@
 from ..helper.image_proc import cropPadImage
 from ..helper.BoundingBox import BoundingBox
 
+class bbParams:
+
+    """Docstring for bbParams. """
+
+    def __init__(self, lamda_shift, lamda_scale, min_scale, max_scale):
+        """TODO: to be defined1. """
+        self.lamda_shift = lamda_shift
+        self.lamda_scale = lamda_scale
+        self.min_scale = min_scale
+        self.max_scale = max_scale
+        
 
 class example_generator:
 
@@ -36,6 +47,36 @@ class example_generator:
 
         return curr_search_region, target_pad, bbox_curr_gt_recentered
 
+    def make_training_examples(self, num_examples, images, targets, bbox_gt_scaled):
+        """TODO: Docstring for make_training_examples.
+        :returns: TODO
+
+        """
+        for i in range(num_examples):
+            pass
+
+    def default_bb_params(self):
+        """TODO: Docstring for default_bb_params.
+        :returns: TODO
+
+        """
+        default_params = bbParams(self.lamda_shift, self.lamda_scale, self.min_scale, self.max_scale)
+        return default_params
+            
+    def make_training_example_BBShift_(self, bbParams, rand_search_region, target_pad, bbox_gt_scaled, visualize_example=False):
+        """TODO: Docstring for make_training_example_BBShift_.
+        :returns: TODO
+
+        """
+        pass
+
+    def make_training_example_BBShift(self):
+        """TODO: Docstring for make_training_example_BBShift.
+        :returns: TODO
+
+        """
+        default_bb_params = default_bb_params()
+        make_training
 
     def reset(self, bbox_curr, bbox_prev, img_curr, img_prev):
         """TODO: to be defined1. """
