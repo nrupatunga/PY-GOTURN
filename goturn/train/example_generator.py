@@ -47,36 +47,54 @@ class example_generator:
 
         return curr_search_region, target_pad, bbox_curr_gt_recentered
 
-    def make_training_examples(self, num_examples, images, targets, bbox_gt_scaled):
+    def make_training_examples(self, num_examples, images, targets, bbox_gt_scales):
         """TODO: Docstring for make_training_examples.
         :returns: TODO
 
         """
         for i in range(num_examples):
-            pass
+            image_rand_focus, target_pad, bbox_gt_scaled = self.make_training_example_BBShift()
+            images.append(image_rand_focus)
+            targets.append(target_pad)
+            bbox_gt_scales.append(bbox_gt_scaled)
 
-    def default_bb_params(self):
-        """TODO: Docstring for default_bb_params.
+    def get_default_bb_params(self):
+        """TODO: Docstring for get_default_bb_params.
         :returns: TODO
 
         """
         default_params = bbParams(self.lamda_shift, self.lamda_scale, self.min_scale, self.max_scale)
         return default_params
             
-    def make_training_example_BBShift_(self, bbParams, rand_search_region, target_pad, bbox_gt_scaled, visualize_example=False):
+    def make_training_example_BBShift_(self, bbParams, visualize_example=False):
         """TODO: Docstring for make_training_example_BBShift_.
         :returns: TODO
 
         """
-        pass
+        bbox_curr_gt = self.bbox_curr_gt_
+        bbox_curr_shift = BoundingBox(0, 0, 0, 0)
+        bbox_curr_shift = bbox_curr_gt.shift(self.img_curr_, bbParams.lambda_scale, bbParams.lamda_shift, bbParams.min_scale, bbParams.max_scale, True, bbox_curr_shift)
+        rand_search_region, rand_search_location , edge_spacing_x, edge_spacing_y = cropPadImage(bbox_curr_shift, self.img_curr_)
+
+        bbox_curr_gt = self.bbox_curr_gt_
+        bbox_gt_recentered = BoundingBox(0, 0, 0, 0)
+        bbox_gt_recentered = bbox_curr_gt.recenter(rand_search_location, edge_spacing_x, edge_spacing_y, bbox_gt_recentered)
+        bbox_gt_recentered.scale(rand_search_region)
+
+        bbox_gt_scaled = bbox_gt_recentered
+
+        return rand_search_region, self.target_pad_, bbox_gt_scaled
 
     def make_training_example_BBShift(self):
         """TODO: Docstring for make_training_example_BBShift.
         :returns: TODO
 
         """
-        default_bb_params = default_bb_params()
-        make_training
+        default_bb_params = get_default_bb_params()
+        image_rand_focus, target_pad, bbox_gt_scaled = make_training_example_BBShift_(default_bb_params)
+
+        return image_rand_focus, target_pad, bbox_gt_scaled
+
 
     def reset(self, bbox_curr, bbox_prev, img_curr, img_prev):
         """TODO: to be defined1. """

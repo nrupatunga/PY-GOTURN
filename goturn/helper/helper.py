@@ -16,7 +16,7 @@ def sample_rand_uniform(arg1):
     """
     return (random.randint(0, RAND_MAX) + 1) * 1.0 / (RAND_MAX + 2)
 
-def sample_exp_two_sides(lambda):
+def sample_exp_two_sides(lambda_):
     """TODO: Docstring for sample_exp_two_sides.
     :returns: TODO
 
@@ -31,4 +31,4 @@ def sample_exp_two_sides(lambda):
 
     rand_uniform = sample_rand_uniform()
 
-    return math.log(rand_uniform) / (lambda * pos_or_neg)
+    return math.log(rand_uniform) / (lambda_ * pos_or_neg)

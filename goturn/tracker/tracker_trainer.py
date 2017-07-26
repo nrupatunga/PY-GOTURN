@@ -33,6 +33,9 @@ class tracker_trainer:
         self.targets.append(target_pad)
         self.bbox_gt_scaled.append(bbox_curr_gt_recentered)
 
+        # Generate more number of examples
+        example_generator.make_training_examples(self.kGeneratedExamplesPerImage, self.images, self.targets, self.bbox_gt_scaled)
+
     def train(self, img_prev, img_curr, bbox_prev, bbox_curr):
         """TODO: to be defined. """
 

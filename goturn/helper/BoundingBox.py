@@ -145,7 +145,7 @@ class BoundingBox:
         """
         return (self.y2 - self.y1)
 
-    def shift(self, image, lambda_scale_frac, lambda_shift_frac, min_scale, max_scale, shift_motion_model):
+    def shift(self, image, lambda_scale_frac, lambda_shift_frac, min_scale, max_scale, shift_motion_model, bbox_rand):
         """TODO: Docstring for shift.
         :returns: TODO
 
@@ -171,6 +171,7 @@ class BoundingBox:
             new_width = max(1.0, min((image.shape[1] - 1), new_width))
             num_tries_width = num_tries_width + 1
 
+
         new_height = 0
         num_tries_height = 0
         while (new_height < 0) or (new_height > image.shape[0] - 1) and (num_tries_height < kMaxNumTries):
@@ -183,3 +184,49 @@ class BoundingBox:
             new_height = height * ( 1 + height_scale_factor )
             new_height = max(1.0, min((image.shape[0] - 1), new_height))
             num_tries_height = num_tries_height + 1
+
+
+        first_time_x = True
+        new_center_x = -1
+        num_tries_x = 0
+
+        while (first_time_x or (new_center_x < center_x - width * self.kContextFactor / 2)
+                or (new_center_x > center_x + width * self.kContextFactor / 2)
+                or ((new_center_x - new_width / 2) < 0)
+                or ((new_center_x + new_width / 2) > image.shape[1])
+                and (num_tries_x < kMaxNumTries)):
+
+            if shift_motion_model:
+                new_x_temp = center_x + width * sample_exp_two_sides(lambda_shift_frac)
+            else:
+                rand_num = sample_rand_uniform()
+                new_x_temp = center_x + rand_num * (2 * new_width) - new_width
+
+            new_center_x = min(image.shape[1] - new_width / 2, max(new_width / 2, new_x_temp))
+            first_time_x = False
+            num_tries_x = num_tries_x + 1
+
+        first_time_y = True
+        new_center_y = -1
+        num_tries_y = 0
+
+        while (first_time_y or (new_center_y < center_y - height * self.kContextFactor / 2)
+                or (new_center_y > center_y + height * self.kContextFactor / 2)
+                or ((new_center_y - new_height / 2) < 0)
+                or ((new_center_y + new_height / 2) > image.shape[0])
+                and (num_tries_y < kMaxNumTries)):
+
+            if shift_motion_model:
+                new_y_temp = center_y + height * sample_exp_two_sides(lambda_shift_frac)
+            else:
+                rand_num = sample_rand_uniform()
+                new_y_temp = center_y + rand_num * (2 * new_height) - new_height
+
+            new_center_y = min(image.shape[0] - new_height / 2, max(new_height / 2, new_y_temp))
+            first_time_y = False
+            num_tries_y = num_tries_y + 1
+
+        bbox_rand.x1 = new_center_x - new_width / 2
+        bbox_rand.x2 = new_center_x + new_width / 2
+        bbox_rand.y1 = new_center_y - new_height / 2
+        bbox_rand.y2 = new_center_y + new_height / 2
