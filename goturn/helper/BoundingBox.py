@@ -158,9 +158,9 @@ class BoundingBox:
 
         kMaxNumTries = 10
 
-        new_width = 0
+        new_width = -1
         num_tries_width = 0
-        while (new_width < 0) or (new_width > image.shape[1] - 1) and (num_tries_width < kMaxNumTries):
+        while ((new_width < 0) or (new_width > image.shape[1] - 1)) and (num_tries_width < kMaxNumTries):
             if shift_motion_model:
                 width_scale_factor = max(min_scale, min(max_scale, sample_exp_two_sides(lambda_scale_frac)))
             else:
@@ -172,9 +172,9 @@ class BoundingBox:
             num_tries_width = num_tries_width + 1
 
 
-        new_height = 0
+        new_height = -1
         num_tries_height = 0
-        while (new_height < 0) or (new_height > image.shape[0] - 1) and (num_tries_height < kMaxNumTries):
+        while ((new_height < 0) or (new_height > image.shape[0] - 1)) and (num_tries_height < kMaxNumTries):
             if shift_motion_model:
                 height_scale_factor = max(min_scale, min(max_scale, sample_exp_two_sides(lambda_scale_frac)))
             else:
@@ -230,3 +230,5 @@ class BoundingBox:
         bbox_rand.x2 = new_center_x + new_width / 2
         bbox_rand.y1 = new_center_y - new_height / 2
         bbox_rand.y2 = new_center_y + new_height / 2
+
+        return bbox_rand

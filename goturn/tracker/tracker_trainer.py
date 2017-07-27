@@ -20,6 +20,14 @@ class tracker_trainer:
         self.targets = []
         self.bbox_gt_scaled = []
 
+        # In current batch
+        self.images_batch_ = []
+        self.targets_batch_ = []
+        self.bbox_gt_scaled_batch_ = []
+
+        # number of images in each batch
+        self.kBatchSize = 50
+
 
     def make_training_examples(self):
         """TODO: Docstring for make_training_examples.
@@ -27,18 +35,26 @@ class tracker_trainer:
 
         """
         example_generator = self.example_generator_
-        image, target_pad, bbox_curr_gt_recentered = example_generator.make_true_example()
+        image, target, bbox_gt_scaled = example_generator.make_true_example()
 
         self.images.append(image)
-        self.targets.append(target_pad)
-        self.bbox_gt_scaled.append(bbox_curr_gt_recentered)
+        self.targets.append(target)
+        self.bbox_gt_scaled.append(bbox_gt_scaled)
 
         # Generate more number of examples
-        example_generator.make_training_examples(self.kGeneratedExamplesPerImage, self.images, self.targets, self.bbox_gt_scaled)
+        self.images, self.targets, self.bbox_gt_scaled = example_generator.make_training_examples(self.kGeneratedExamplesPerImage, self.images, self.targets, self.bbox_gt_scaled)
 
     def train(self, img_prev, img_curr, bbox_prev, bbox_curr):
         """TODO: to be defined. """
 
+        logger = self.logger
         example_generator = self.example_generator_
         example_generator.reset(bbox_prev, bbox_curr, img_prev, img_curr)
         self.make_training_examples()
+
+        num_in_batch = len(self.images_batch_)
+        num_left_in_batch = self.kBatchSize - num_in_batch
+        num_use = min(len(self.images), num_left_in_batch)
+
+        if num_use < 0:
+            logger.error('Error: num_use = {}', num_use)

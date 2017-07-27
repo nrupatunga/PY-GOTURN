@@ -58,6 +58,8 @@ class example_generator:
             targets.append(target_pad)
             bbox_gt_scales.append(bbox_gt_scaled)
 
+        return images, targets, bbox_gt_scales
+
     def get_default_bb_params(self):
         """TODO: Docstring for get_default_bb_params.
         :returns: TODO
@@ -73,7 +75,9 @@ class example_generator:
         """
         bbox_curr_gt = self.bbox_curr_gt_
         bbox_curr_shift = BoundingBox(0, 0, 0, 0)
-        bbox_curr_shift = bbox_curr_gt.shift(self.img_curr_, bbParams.lambda_scale, bbParams.lamda_shift, bbParams.min_scale, bbParams.max_scale, True, bbox_curr_shift)
+        import pdb
+        pdb.set_trace()
+        bbox_curr_shift = bbox_curr_gt.shift(self.img_curr_, bbParams.lamda_scale, bbParams.lamda_shift, bbParams.min_scale, bbParams.max_scale, True, bbox_curr_shift)
         rand_search_region, rand_search_location , edge_spacing_x, edge_spacing_y = cropPadImage(bbox_curr_shift, self.img_curr_)
 
         bbox_curr_gt = self.bbox_curr_gt_
@@ -90,8 +94,8 @@ class example_generator:
         :returns: TODO
 
         """
-        default_bb_params = get_default_bb_params()
-        image_rand_focus, target_pad, bbox_gt_scaled = make_training_example_BBShift_(default_bb_params)
+        default_bb_params = self.get_default_bb_params()
+        image_rand_focus, target_pad, bbox_gt_scaled = self.make_training_example_BBShift_(default_bb_params)
 
         return image_rand_focus, target_pad, bbox_gt_scaled
 

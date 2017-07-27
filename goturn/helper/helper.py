@@ -6,8 +6,9 @@
 import random
 import math
 
+RAND_MAX = 2147483647
 
-def sample_rand_uniform(arg1):
+def sample_rand_uniform():
     """TODO: Docstring for sample_rand_uniform.
 
     :arg1: TODO
@@ -21,7 +22,6 @@ def sample_exp_two_sides(lambda_):
     :returns: TODO
 
     """
-    RAND_MAX = 2147483647
 
     pos_or_neg = random.randint(0, RAND_MAX)
     if (pos_or_neg % 2) == 0:
