@@ -41,7 +41,7 @@ kNumBatches = 500000
 
 
 def train_image(image_loader, images, tracker_trainer):
-    """TODO: Docstring for main.
+    """TODO: Docstring for train_image.
     """
     curr_image = np.random.randint(0, len(images))
     list_annotations = images[curr_image]
@@ -50,6 +50,22 @@ def train_image(image_loader, images, tracker_trainer):
     image, bbox = image_loader.load_annotation(curr_image, curr_ann)
     tracker_trainer.train(image, image, bbox, bbox)
 
+def train_video(videos, tracker_trainer):
+    """TODO: Docstring for train_video.
+    """
+    video_num = np.random.randint(0, len(videos))
+    video = videos[video_num]
+
+    annotations = video.annotations
+
+    if len(annotations) < 2:
+        logger.info('Error - video {} has only {} annotations', video.video_path, len(annotations))
+
+    ann_index = np.random.randint(0, len(annotations) - 1)
+    frame_num_prev, image_prev, bbox_prev = video.load_annotation(ann_index)
+
+    frame_num_curr, image_curr, bbox_curr = video.load_annotation(ann_index + 1)
+    tracker_trainer.train(image_prev, image_curr, bbox_prev, bbox_prev)
 
 def main(args):
     """TODO: Docstring for main.
@@ -87,6 +103,7 @@ def main(args):
 
     while objTrackTrainer.num_batches_ < kNumBatches:
         train_image(objLoaderImgNet, train_imagenet_images, objTrackTrainer)
+        train_video(train_alov_videos, objTrackTrainer)
 
 
 if __name__ == '__main__':

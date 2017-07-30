@@ -3,6 +3,7 @@
 # Name: Nrupatunga
 # Description: Basic video helper functions
 
+import cv2
 
 class frame:
 
@@ -23,6 +24,23 @@ class video:
         self.all_frames = []
         self.annotations = []
 
+    def load_annotation(self, annotation_index):
+        """TODO: Docstring for load_annotation.
+        :returns: TODO
+
+        """
+        ann_frame = self.annotations[annotation_index]
+        frame_num = ann_frame.frame_num
+        bbox = ann_frame.bbox
+
+        video_path = self.video_path
+        image_files =  self.all_frames
+
+        assert(len(image_files) > 0)
+        assert(frame_num < len(image_files))
+        
+        image = cv2.imread(image_files[frame_num])
+        return frame_num, image, bbox
 
     def loadframe(self, frame_idx, draw_bounding_box, load_only_annotation):
         """TODO: Docstring for loadframe.
@@ -30,5 +48,3 @@ class video:
 
         """
         pass
-
-        
