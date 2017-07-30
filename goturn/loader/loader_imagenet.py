@@ -11,6 +11,7 @@ import glob
 from annotation import annotation
 import xml.etree.ElementTree as ET
 from ..logger.logger import setup_logger
+from ..helper import config
 
 
 kMaxRatio = 0.66
@@ -119,17 +120,14 @@ class loader_imagenet:
 
 
         img_path = os.path.join(self.imagenet_folder, random_ann.image_path + '.JPEG')
-        import pdb
-        pdb.set_trace()
 
-        debug = 1
-        if debug == 1:
-            img_path = "/media/nrupatunga/data/datasets/ILSVRC2014/ILSVRC2014_DET_train/n04118538/n04118538_3385.JPEG"
-            random_ann.bbox.x1 = 416
-            random_ann.bbox.y1 = 29
-            random_ann.bbox.x2 = 469
-            random_ann.bbox.y2 = 71
-            random_ann.disp_height = 281
+        if config.DEBUG:
+            img_path = "/media/nrupatunga/Data-Backup/DL/goturn/ILSVRC2014/ILSVRC2014_DET_train/ILSVRC2014_train_0005/ILSVRC2014_train_00059375.JPEG"
+            random_ann.bbox.x1 = 243
+            random_ann.bbox.y1 = 157
+            random_ann.bbox.x2 = 278
+            random_ann.bbox.y2 = 176
+            random_ann.disp_height = 375
             random_ann.disp_width = 500
 
 

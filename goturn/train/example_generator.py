@@ -75,8 +75,6 @@ class example_generator:
         """
         bbox_curr_gt = self.bbox_curr_gt_
         bbox_curr_shift = BoundingBox(0, 0, 0, 0)
-        import pdb
-        pdb.set_trace()
         bbox_curr_shift = bbox_curr_gt.shift(self.img_curr_, bbParams.lamda_scale, bbParams.lamda_shift, bbParams.min_scale, bbParams.max_scale, True, bbox_curr_shift)
         rand_search_region, rand_search_location , edge_spacing_x, edge_spacing_y = cropPadImage(bbox_curr_shift, self.img_curr_)
 

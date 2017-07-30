@@ -9,7 +9,8 @@ import glob
 import numpy as np
 import sys
 import cv2
-sys.path.insert(0, '/usr/local/caffe/python')
+from ..helper import config
+sys.path.insert(0, config.CAFFE_PATH)
 import caffe
 
 class regressor:
@@ -26,10 +27,24 @@ class regressor:
         self.modified_params = False
         self.setupNetwork(deploy_proto, caffe_model, gpu_id, do_train)
 
-    def init(self):
-        """init function
+    def reshape_image_inputs(self, num_images):
+        """TODO: Docstring for reshape_image_inputs.
+        :returns: TODO
         """
-        pass
+        
+        net = self.net
+        net.blobs['image'].reshape(num_images, self.channels, self.height, self.width)
+        net.blobs['target'].reshape(num_images, self.channels, self.height, self.width)
+
+
+    def set_images(self, images, targets):
+        """TODO: Docstring for set_images.
+        :returns: TODO
+        """
+        num_images = len(images)
+        self.reshape_image_inputs(num_images)
+        self.preprocess_batch(images, targets)
+
 
     def preprocess(self, image):
         """TODO: Docstring for preprocess.
@@ -58,6 +73,25 @@ class regressor:
         image_out = np.transpose(image_out, [2, 0, 1])
         return image_out
 
+    def preprocess_batch(self, images_batch, targets_batch):
+        """TODO: Docstring for preprocess_batch.
+
+        :arg1: TODO
+        :returns: TODO
+
+        """
+
+        net = self.net
+        num_images = len(images_batch)
+        for i in range(num_images):
+            image = images_batch[i]
+            image_out = self.preprocess(image)
+            net.blobs['image'].data[i] = image_out
+
+            target = targets_batch[i]
+            target_out = self.preprocess(target)
+            net.blobs['target'].data[i] = target_out
+
 
     def setupNetwork(self, deploy_proto, caffe_model, gpu_id, do_train):
         """TODO: Docstring for setupNetwork.
@@ -77,9 +111,11 @@ class regressor:
             # TODO: this part of the code needs to be changed for
             # training phase
             net = caffe.Net(deploy_proto, caffe_model, caffe.TRAIN)
+            self.phase = caffe.TRAIN
         else:
             logger.info('Setting phase to test')
             net = caffe.Net(deploy_proto, caffe_model, caffe.TEST)
+            self.phase = caffe.TEST
 
         self.net = net
         self.num_inputs = net.blobs['image'].data[...].shape[0]

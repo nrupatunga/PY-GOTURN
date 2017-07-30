@@ -18,6 +18,7 @@ import os
 import caffe
 import numpy as np
 
+
 setproctitle.setproctitle('TRAIN_TRACKER_IMAGENET_ALOV')
 logger = setup_logger(logfile=None)
 
@@ -36,6 +37,7 @@ ap.add_argument("-gpu_id", "--gpu_id", required = True, help = "gpu id")
 
 RANDOM_SEED = 800
 GPU_ONLY = True
+kNumBatches = 500000
 
 
 def train_image(image_loader, images, tracker_trainer):
@@ -82,7 +84,9 @@ def main(args):
     objRegTrain = regressor_train(args['train_prototxt'], args['init_caffemodel'], int(args['gpu_id']), args['solver_prototxt'], logger) 
     objTrackTrainer = tracker_trainer(objExampleGen, objRegTrain, logger)
 
-    train_image(objLoaderImgNet, train_imagenet_images, objTrackTrainer)
+
+    while objTrackTrainer.num_batches_ < kNumBatches:
+        train_image(objLoaderImgNet, train_imagenet_images, objTrackTrainer)
 
 
 if __name__ == '__main__':

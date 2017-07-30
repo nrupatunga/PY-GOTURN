@@ -4,6 +4,7 @@
 # Description: tracker trainer
 
 from ..train.example_generator import example_generator
+from ..helper import config
 
 class tracker_trainer:
     """tracker trainer class"""
@@ -26,8 +27,19 @@ class tracker_trainer:
         self.bbox_gt_scaled_batch_ = []
 
         # number of images in each batch
-        self.kBatchSize = 50
+        if config.DEBUG:
+            self.kBatchSize = self.kGeneratedExamplesPerImage + 1
+        else:
+            self.kBatchSize = 50
 
+
+    def process_batch(self):
+        """TODO: Docstring for process_batch.
+        :returns: TODO
+
+        """
+        self.regressor_train_.train(self.images_batch_, self.targets_batch_,
+                self.bbox_gt_scaled_batch_)
 
     def make_training_examples(self):
         """TODO: Docstring for make_training_examples.
@@ -52,9 +64,26 @@ class tracker_trainer:
         example_generator.reset(bbox_prev, bbox_curr, img_prev, img_curr)
         self.make_training_examples()
 
-        num_in_batch = len(self.images_batch_)
-        num_left_in_batch = self.kBatchSize - num_in_batch
-        num_use = min(len(self.images), num_left_in_batch)
+        while len(self.images) > 0:
+            num_in_batch = len(self.images_batch_)
+            num_left_in_batch = self.kBatchSize - num_in_batch
+            num_use = min(len(self.images), num_left_in_batch)
 
-        if num_use < 0:
-            logger.error('Error: num_use = {}', num_use)
+            if num_use < 0:
+                logger.error('Error: num_use = {}', num_use)
+
+
+            self.images_batch_.extend(self.images[0:num_use])
+            self.targets_batch_.extend(self.targets[0:num_use])
+            self.bbox_gt_scaled_batch_.extend(self.bbox_gt_scaled[0:num_use])
+
+            if (len(self.images_batch_) == self.kBatchSize):
+                self.num_batches_ = self.num_batches_ + 1
+                self.process_batch()
+
+                self.images, self.targets, self.bbox_gt_scaled = [], [], []
+                self.images_batch_, self.targets_batch_, self.bbox_gt_scaled_batch_ = [], [], []
+
+            self.images = self.images[num_use:]
+            self.targets = self.targets[num_use:]
+            self.bbox_gt_scaled = self.bbox_gt_scaled[num_use:]
