@@ -5,4 +5,4 @@
 
 
 CAFFE_PATH = '/usr/local/caffe/python'
-DEBUG = True
+DEBUG = False

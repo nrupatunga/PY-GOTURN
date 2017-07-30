@@ -9,6 +9,8 @@ from regressor import regressor
 from ..helper import config
 sys.path.insert(0, config.CAFFE_PATH)
 import caffe
+from visdom import Visdom
+viz = Visdom()
 
 class regressor_train:
 
@@ -19,10 +21,11 @@ class regressor_train:
 
         self.kDoTrain = True
         self.kNumInputs = 3
-        objRegressor = regressor(deploy_proto, caffe_model, gpu_id, self.kNumInputs, self.kDoTrain, logger)
+        objRegressor = regressor(deploy_proto, caffe_model, gpu_id,
+                self.kNumInputs, self.kDoTrain, logger, solver_file)
         self.regressor = objRegressor
         self.logger = logger
-        self.solver = caffe.SGDSolver(solver_file)
+        self.solver = objRegressor.solver
 
     def set_boxes_gt(self, bboxes_gt):
         """TODO: Docstring for set_boxes_gt.
@@ -63,12 +66,17 @@ class regressor_train:
         self.regressor.set_images(images, targets)
         self.step()
 
+    def visualize_train(self):
+        net = self.solver.net
+        images = net.blobs['image'].data
+        targets = net.blobs['target'].data
+        viz.images(images, opts=dict(title='Random Images!', caption='How random.'))
+        viz.images(targets, opts=dict(title='Random Targets!', caption='How random.'))
+
     def step(self):
         """TODO: Docstring for step.
         :returns: TODO
         """
 
         self.solver.step(1)
-
-        
-
+        self.visualize_train()

@@ -5,6 +5,8 @@
 
 from ..train.example_generator import example_generator
 from ..helper import config
+from visdom import Visdom
+viz = Visdom()
 
 class tracker_trainer:
     """tracker trainer class"""
@@ -55,6 +57,13 @@ class tracker_trainer:
 
         # Generate more number of examples
         self.images, self.targets, self.bbox_gt_scaled = example_generator.make_training_examples(self.kGeneratedExamplesPerImage, self.images, self.targets, self.bbox_gt_scaled)
+
+    def visualize_train(self):
+        images = self.images_batch_
+        targets = self.targets_batch_
+
+        viz.images(images, opts=dict(title='Random Images!', caption='How random.'))
+        viz.images(targets, opts=dict(title='Random Targets!', caption='How random.'))
 
     def train(self, img_prev, img_curr, bbox_prev, bbox_curr):
         """TODO: to be defined. """

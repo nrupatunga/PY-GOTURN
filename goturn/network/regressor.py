@@ -16,7 +16,8 @@ import caffe
 class regressor:
     """Regressor Class"""
 
-    def __init__(self, deploy_proto, caffe_model, gpu_id, num_inputs, do_train, logger):
+    def __init__(self, deploy_proto, caffe_model, gpu_id, num_inputs,
+            do_train, logger, solver_file=None):
         """TODO: to be defined"""
 
         self.num_inputs = num_inputs
@@ -25,6 +26,10 @@ class regressor:
         self.modified_params_ = False
         self.mean = [104, 117, 123]
         self.modified_params = False
+        self.solver_file = None
+
+        if solver_file:
+            self.solver_file = solver_file
         self.setupNetwork(deploy_proto, caffe_model, gpu_id, do_train)
 
     def reshape_image_inputs(self, num_images):
@@ -68,8 +73,8 @@ class regressor:
         if image_out.shape != (self.height, self.width, self.channels):
             image_out = cv2.resize(image_out, (self.width, self.height), interpolation=cv2.INTER_CUBIC)
 
-        image_out = np.float32(image_out)
-        image_out -= np.array(self.mean)
+        # image_out = np.float32(image_out)
+        # image_out -= np.array(self.mean)
         image_out = np.transpose(image_out, [2, 0, 1])
         return image_out
 
@@ -110,7 +115,14 @@ class regressor:
             logger.info('Setting phase to train')
             # TODO: this part of the code needs to be changed for
             # training phase
-            net = caffe.Net(deploy_proto, caffe_model, caffe.TRAIN)
+            if self.solver_file:
+                self.solver = caffe.SGDSolver(self.solver_file)
+                net = self.solver.net
+                net.copy_from(caffe_model)
+            else:
+                logger.error('solver file required')
+                return
+
             self.phase = caffe.TRAIN
         else:
             logger.info('Setting phase to test')
