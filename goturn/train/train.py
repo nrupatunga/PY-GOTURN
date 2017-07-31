@@ -83,8 +83,8 @@ def main(args):
 
     logger.info('Loading training data')
     # Load imagenet training images and annotations
-    imagenet_folder = os.path.join(args['imagenet'], 'ILSVRC2014_DET_train')
-    imagenet_annotations_folder = os.path.join(args['imagenet'], 'ILSVRC2014_DET_bbox_train')
+    imagenet_folder = os.path.join(args['imagenet'], 'images')
+    imagenet_annotations_folder = os.path.join(args['imagenet'], 'gt')
     objLoaderImgNet = loader_imagenet(imagenet_folder, imagenet_annotations_folder, logger)
     train_imagenet_images = objLoaderImgNet.loaderImageNetDet()
 
@@ -99,7 +99,6 @@ def main(args):
     objExampleGen = example_generator(float(args['lamda_shift']), float(args['lamda_scale']), float(args['min_scale']), float(args['max_scale']), logger)
     objRegTrain = regressor_train(args['train_prototxt'], args['init_caffemodel'], int(args['gpu_id']), args['solver_prototxt'], logger) 
     objTrackTrainer = tracker_trainer(objExampleGen, objRegTrain, logger)
-
 
     while objTrackTrainer.num_batches_ < kNumBatches:
         train_image(objLoaderImgNet, train_imagenet_images, objTrackTrainer)

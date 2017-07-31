@@ -5,6 +5,11 @@
 
 from ..helper.image_proc import cropPadImage
 from ..helper.BoundingBox import BoundingBox
+from visdom import Visdom
+import cv2
+import numpy as np
+
+viz = Visdom()
 
 class bbParams:
 
@@ -57,8 +62,24 @@ class example_generator:
             images.append(image_rand_focus)
             targets.append(target_pad)
             bbox_gt_scales.append(bbox_gt_scaled)
+            self.visualize(image_rand_focus, target_pad, bbox_gt_scaled, i)
 
         return images, targets, bbox_gt_scales
+
+    def visualize(self, image, target, bbox, idx):
+        """TODO: Docstring for visualize.
+        :returns: TODO
+
+        """
+        target = cv2.resize(target, (227, 227))
+        image = cv2.resize(image, (227, 227))
+
+        bbox.unscale(image)
+        bbox.x1, bbox.x2, bbox.y1, bbox.y2 = int(bbox.x1), int(bbox.x2), int(bbox.y1), int(bbox.y2)
+
+        image = cv2.rectangle(image, (bbox.x1, bbox.y1),(bbox.x2, bbox.y2), (0,255,0),2)
+        out = np.concatenate((target[np.newaxis, ...], image[np.newaxis,...]), axis=0)
+        viz.images(np.transpose(out, [0, 3, 1, 2]), opts=dict(title='image' + str(idx), caption='How random.'))
 
     def get_default_bb_params(self):
         """TODO: Docstring for get_default_bb_params.
