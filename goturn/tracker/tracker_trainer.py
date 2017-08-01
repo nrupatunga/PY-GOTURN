@@ -30,7 +30,7 @@ class tracker_trainer:
         if config.DEBUG:
             self.kBatchSize = self.kGeneratedExamplesPerImage + 1
         else:
-            self.kBatchSize = 50
+            self.kBatchSize = 1
 
     def process_batch(self):
         """TODO: Docstring for process_batch.
