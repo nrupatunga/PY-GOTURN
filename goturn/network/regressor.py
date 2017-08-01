@@ -73,8 +73,8 @@ class regressor:
         if image_out.shape != (self.height, self.width, self.channels):
             image_out = cv2.resize(image_out, (self.width, self.height), interpolation=cv2.INTER_CUBIC)
 
-        # image_out = np.float32(image_out)
-        # image_out -= np.array(self.mean)
+        image_out = np.float32(image_out)
+        image_out -= np.array(self.mean)
         image_out = np.transpose(image_out, [2, 0, 1])
         return image_out
 

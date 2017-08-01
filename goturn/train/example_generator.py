@@ -62,7 +62,7 @@ class example_generator:
             images.append(image_rand_focus)
             targets.append(target_pad)
             bbox_gt_scales.append(bbox_gt_scaled)
-            self.visualize(image_rand_focus, target_pad, bbox_gt_scaled, i)
+            # self.visualize(image_rand_focus, target_pad, bbox_gt_scaled, i)
 
         return images, targets, bbox_gt_scales
 

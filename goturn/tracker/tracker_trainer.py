@@ -5,8 +5,6 @@
 
 from ..train.example_generator import example_generator
 from ..helper import config
-from visdom import Visdom
-viz = Visdom()
 
 class tracker_trainer:
     """tracker trainer class"""

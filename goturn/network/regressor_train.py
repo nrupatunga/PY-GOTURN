@@ -79,4 +79,4 @@ class regressor_train:
         """
 
         self.solver.step(1)
-        self.visualize_train()
+        # self.visualize_train()
