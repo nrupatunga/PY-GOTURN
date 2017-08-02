@@ -32,11 +32,10 @@ def cropPadImage(bbox_tight, image):
     edge_spacing_x = min(bbox_tight.edge_spacing_x(), (image.shape[1] - 1))
     edge_spacing_y = min(bbox_tight.edge_spacing_y(), (image.shape[0] - 1))
     
-    if output_image[int(edge_spacing_y):int(edge_spacing_y) + cropped_image.shape[0], int(edge_spacing_x):int(edge_spacing_x) + cropped_image.shape[1]].shape != cropped_image.shape :
-        import pdb
-        pdb.set_trace()
-        print('debug')
-
+    # if output_image[int(edge_spacing_y):int(edge_spacing_y) + cropped_image.shape[0], int(edge_spacing_x):int(edge_spacing_x) + cropped_image.shape[1]].shape != cropped_image.shape :
+        # import pdb
+        # pdb.set_trace()
+        # print('debug')
 
     # rounding should be done to match the width and height
     output_image[int(edge_spacing_y):int(edge_spacing_y) + cropped_image.shape[0], int(edge_spacing_x):int(edge_spacing_x) + cropped_image.shape[1]] = cropped_image

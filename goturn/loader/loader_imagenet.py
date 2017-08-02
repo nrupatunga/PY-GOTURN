@@ -142,8 +142,8 @@ class loader_imagenet:
             logger.info('Image Size = {} x {}'.format(img_width, img_height))
             logger.info('Display Size = {} x {}'.format(random_ann.disp_width, random_ann.disp_height))
 
-            sc_factor_1 = img_height / random_ann.disp_height
-            sc_factor_2 = img_width / random_ann.disp_width
+            sc_factor_1 = (img_height * 1.) / random_ann.disp_height
+            sc_factor_2 = (img_width * 1.) / random_ann.disp_width
 
             logger.info('Factor: {} {}'.format(sc_factor_1, sc_factor_2))
 
