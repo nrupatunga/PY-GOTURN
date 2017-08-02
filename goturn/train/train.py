@@ -101,7 +101,7 @@ def main(args):
     objTrackTrainer = tracker_trainer(objExampleGen, objRegTrain, logger)
 
     while objTrackTrainer.num_batches_ < kNumBatches:
-        # train_image(objLoaderImgNet, train_imagenet_images, objTrackTrainer)
+        train_image(objLoaderImgNet, train_imagenet_images, objTrackTrainer)
         train_video(train_alov_videos, objTrackTrainer)
 
 

@@ -20,7 +20,8 @@ def cropPadImage(bbox_tight, image):
     roi_width = min(image.shape[1], max(1.0, math.ceil(pad_image_location.x2 - pad_image_location.x1)))
     roi_height = min(image.shape[0], max(1.0, math.ceil(pad_image_location.y2 - pad_image_location.y1)))
 
-    cropped_image = image[int(roi_bottom):int(roi_bottom + roi_height), int(roi_left):int(roi_left + roi_width)]
+    err = 0.000000001 # To take care of floating point arithmetic errors
+    cropped_image = image[int(roi_bottom + err):int(roi_bottom + roi_height), int(roi_left + err):int(roi_left + roi_width)]
     output_width = max(math.ceil(bbox_tight.compute_output_width()), roi_width)
     output_height = max(math.ceil(bbox_tight.compute_output_height()), roi_height)
     if image.ndim > 2:
