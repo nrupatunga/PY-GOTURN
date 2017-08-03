@@ -23,7 +23,7 @@ ap.add_argument("-g", "--gpuID", required = True, help = "gpu to use")
 args = vars(ap.parse_args())
 
 do_train = False
-objRegressor = regressor(args['prototxt'], args['model'], args['gpuID'], do_train, logger)
+objRegressor = regressor(args['prototxt'], args['model'], args['gpuID'], 1, do_train, logger)
 objTracker = tracker(False, logger) # Currently no idea why this class is needed, eventually we shall figure it out
 objLoaderVot = loader_vot(args['input'], logger)
 videos = objLoaderVot.get_videos()

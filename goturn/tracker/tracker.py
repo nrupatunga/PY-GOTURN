@@ -24,7 +24,7 @@ class tracker:
         self.image_prev = image_curr
         self.bbox_prev_tight = bbox_gt
         self.bbox_curr_prior_tight = bbox_gt
-        objRegressor.init()
+        # objRegressor.init()
 
     def track(self, image_curr, objRegressor):
         """TODO: Docstring for tracker.
