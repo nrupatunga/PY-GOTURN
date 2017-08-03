@@ -9,6 +9,12 @@ This is the **python** implementation of **GOTURN: Generic Object Tracking Using
 [Silvio Savarese](http://cvgl.stanford.edu/silvio/),
 <br>
 
+### Why reimplementation of in python?
+
+* Easy to experiment
+* Easy to debug
+* Easy portability
+
 ### Outputs
 
 |Car           |  Sunshade |
