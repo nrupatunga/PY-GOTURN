@@ -9,3 +9,10 @@ This is the python implementation of **GOTURN: Generic Object Tracking Using Reg
 [Silvio Savarese](http://cvgl.stanford.edu/silvio/),
 <br>
 European Conference on Computer Vision (ECCV), 2016 (In press)
+
+
+### Outputs
+
+|Car           |  Sunshade |
+|------------------------|-------------------------|
+|![](https://github.com/nrupatunga/PY-GOTURN/blob/goturn-0.1/output/movie_2.gif)  | ![](https://github.com/nrupatunga/PY-GOTURN/blob/goturn-0.1/output/movie_1.gif) | 
