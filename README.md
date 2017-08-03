@@ -12,8 +12,8 @@ This is the **python** implementation of **GOTURN: Generic Object Tracking Using
 ### Why implementation in python, when C++ code is already available?
 
 * Easy to understand the overall pipeline of the algorithm in detail
-* Easy to experiment
-* Easy to debug 
+* Easy to experiment new ideas
+* Easy to debug and visualize the network with tools like [visdom](https://github.com/facebookresearch/visdom)
 * Easy portability
 
 ### Outputs
