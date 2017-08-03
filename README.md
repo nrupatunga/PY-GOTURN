@@ -8,8 +8,6 @@ This is the python implementation of **GOTURN: Generic Object Tracking Using Reg
 [Sebastian Thrun](http://robots.stanford.edu/),
 [Silvio Savarese](http://cvgl.stanford.edu/silvio/),
 <br>
-European Conference on Computer Vision (ECCV), 2016 (In press)
-
 
 ### Outputs
 
