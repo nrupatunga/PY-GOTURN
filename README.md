@@ -9,7 +9,7 @@ This is the **python** implementation of **GOTURN: Generic Object Tracking Using
 [Silvio Savarese](http://cvgl.stanford.edu/silvio/),
 <br>
 
-### Why reimplementation of in python?
+### Why implementation in python, when C++ code is already available?
 
 * Easy to understand the overall pipeline of the algorithm in detail
 * Easy to experiment
