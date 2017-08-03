@@ -14,7 +14,7 @@ This is the **python** implementation of **GOTURN: Generic Object Tracking Using
 * Easy to understand the overall pipeline of the algorithm in detail
 * Easy to experiment new ideas
 * Easy to debug and visualize the network with tools like [visdom](https://github.com/facebookresearch/visdom)
-* Easy portability to windows/linux, without having to worry about building third party libraries.
+* Easy portability to Windows/Ubuntu, without having to worry about building third party libraries (except building CAFFE).
 
 ### Outputs
 
