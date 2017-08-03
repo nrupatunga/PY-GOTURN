@@ -9,15 +9,16 @@ This is the **python** implementation of **GOTURN: Generic Object Tracking Using
 [Silvio Savarese](http://cvgl.stanford.edu/silvio/),
 <br>
 
+### Outputs
+
+|Car           |  Sunshade |
+|------------------------|-------------------------|
+|![](https://github.com/nrupatunga/PY-GOTURN/blob/goturn-0.1/output/movie_2.gif)  | ![](https://github.com/nrupatunga/PY-GOTURN/blob/goturn-0.1/output/movie_1.gif) | 
+
+
 ### Why implementation in python, when C++ code is already available?
 
 * Easy to understand the overall pipeline of the algorithm in detail
 * Easy to experiment new ideas
 * Easy to debug and visualize the network with tools like [visdom](https://github.com/facebookresearch/visdom)
 * Easy portability to Windows/Ubuntu, without having to worry about building third party libraries (except building CAFFE).
-
-### Outputs
-
-|Car           |  Sunshade |
-|------------------------|-------------------------|
-|![](https://github.com/nrupatunga/PY-GOTURN/blob/goturn-0.1/output/movie_2.gif)  | ![](https://github.com/nrupatunga/PY-GOTURN/blob/goturn-0.1/output/movie_1.gif) | 
