@@ -1,8 +1,8 @@
-IMAGENET_FOLDER='/media/nrupatunga/Data-Backup/DL/goturn/ILSVRC2014/'
-ALOV_FOLDER='/media/nrupatunga/Data-Backup/DL/goturn/VOT/'
-INIT_CAFFEMODEL='/home/nrupatunga/Work-2017/code/GOTURN/nets/models/weights_init/tracker_init.caffemodel'
-TRACKER_PROTO='/home/nrupatunga/Work-2017/code/GOTURN/nets/tracker.prototxt'
-SOLVER_PROTO='/home/nrupatunga/Work-2017/code/GOTURN/nets/solver.prototxt'
+IMAGENET_FOLDER='/media/nrupatunga/data/datasets/ILSVRC2014/'
+ALOV_FOLDER='/media/nrupatunga/data/datasets/VOT-extract/'
+INIT_CAFFEMODEL='/home/nrupatunga/Work-2017/DeepLearning/Code/GOTURN/nets/models/weights_init/tracker_init.caffemodel'
+TRACKER_PROTO='/home/nrupatunga/Work-2017/DeepLearning/Code/GOTURN/nets/tracker.prototxt'
+SOLVER_PROTO='/home/nrupatunga/Work-2017/DeepLearning/Code/GOTURN/nets/solver.prototxt'
 
 python -m goturn.train.train \
 --imagenet $IMAGENET_FOLDER \
