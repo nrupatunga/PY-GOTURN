@@ -28,6 +28,8 @@ Once you extracted the dataset please make the following changes in __train_trac
 
 **SOLVER_PROTO**: Path to solver.prototxt
 
+
+Run the following command
 ```
 bash train_tracker.sh
 
