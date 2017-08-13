@@ -1,4 +1,4 @@
-### How to train your own tracker
+## How to train your own tracker
 
 You need to download the following datasets first 
 

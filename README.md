@@ -28,4 +28,7 @@ This is the **python** implementation of **GOTURN: Generic Object Tracking Using
 
 - [X] Test code for VOT
 
+### How to train your own tracker
+
+To train your own tracker, please follow the [guide](https://github.com/nrupatunga/PY-GOTURN/blob/goturn-0.1/how_to_train.md)
 
