@@ -35,7 +35,3 @@ To train your own tracker, please follow the [guide](https://github.com/nrupatun
 ### How to test on VOT dataset
 
 To test your own tracker on VOT2014, please follow the [guide](https://github.com/nrupatunga/PY-GOTURN/blob/goturn-0.1/how_to_test.md)
-
-### How to test on VOT dataset
-
-To test your own tracker on VOT2014, please follow the [guide](https://github.com/nrupatunga/PY-GOTURN/blob/goturn-0.1/how_to_test.md)
