@@ -52,3 +52,10 @@ Once you extracted the dataset please make the following changes in __train_trac
 |images           | gt  |
 |------------------------|-------------------------|
 |![](https://github.com/nrupatunga/PY-GOTURN/blob/goturn-0.1/doc/images/alov_images.jpg)  | ![](https://github.com/nrupatunga/PY-GOTURN/blob/goturn-0.1/doc/images/alov_gt.jpg) | 
+
+**INIT_CAFFEMODEL**: Path to pretrained model
+
+**TRACKER_PROTO**: Path to tracker.prototxt
+
+**SOLVER_PROTO**: Path to solver.prototxt
+
