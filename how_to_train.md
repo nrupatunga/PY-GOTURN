@@ -22,9 +22,14 @@ Once you extracted the dataset please make the following changes in __train_trac
 |------------------------|-------------------------|
 |![](https://github.com/nrupatunga/PY-GOTURN/blob/goturn-0.1/doc/images/alov_images.jpg)  | ![](https://github.com/nrupatunga/PY-GOTURN/blob/goturn-0.1/doc/images/alov_gt.jpg) | 
 
-**INIT_CAFFEMODEL**: Path to pretrained model
+**INIT_CAFFEMODEL**: Path to [pretrained model](http://cs.stanford.edu/people/davheld/public/GOTURN/weights_init/tracker_init.caffemodel)
 
 **TRACKER_PROTO**: Path to tracker.prototxt
 
 **SOLVER_PROTO**: Path to solver.prototxt
+
+```
+bash train_tracker.sh
+
+```
 
