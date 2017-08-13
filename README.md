@@ -35,7 +35,7 @@ You need to download the following datasets first
 
 * *__ALOV dataset__* - The ALOV video dataset can be downloaded here: http://alov300pp.joomlafree.it/
 
-* *__ImageNet dataset__* - Download the DET dataset (47GB) and bounding box annotations (15MB) from [ImageNet](http://www.image-net.org/download-images). Extract the training images and the annotations.
+* *__Imagenet dataset__* - Download the DET dataset (47GB) and bounding box annotations (15MB) from [Imagenet](http://www.image-net.org/download-images). Extract the training images and the annotations.
 
 Once you extracted the dataset please make the following changes in __train_tracker.sh__:
 
