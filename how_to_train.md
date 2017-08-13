@@ -9,13 +9,13 @@ You need to download the following datasets first
 Once you extracted the dataset please make the following changes in __train_tracker.sh__:
 
 
-**IMAGENET_FOLDER**: this folder should contain **images** and **gt**. The folder structure is as shown below.
+**IMAGENET_FOLDER**: this folder should contain **images** and **gt** (annotations). The folder structure is as shown below.
 
 |images           | gt  |
 |------------------------|-------------------------|
 |![](https://github.com/nrupatunga/PY-GOTURN/blob/goturn-0.1/doc/images/imagenet_images.jpg)  | ![](https://github.com/nrupatunga/PY-GOTURN/blob/goturn-0.1/doc/images/imagenet_gt.jpg) | 
 
-**ALOV_FOLDER**: this folder should contain **images** and **gt**. The folder structure is as shown below.
+**ALOV_FOLDER**: this folder should contain **images** and **gt** (annotations). The folder structure is as shown below.
 
 
 |images           | gt  |
