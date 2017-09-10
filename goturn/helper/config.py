@@ -6,3 +6,4 @@
 
 CAFFE_PATH = '/usr/local/caffe/python'
 DEBUG = False
+OPENCV_VERSION=2

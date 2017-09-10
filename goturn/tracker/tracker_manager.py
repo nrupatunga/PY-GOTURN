@@ -5,6 +5,8 @@
 
 import cv2 
 
+opencv_version = cv2.__version__.split('.')[0]
+
 class tracker_manager:
 
     """Docstring for tracker_manager. """
@@ -51,8 +53,17 @@ class tracker_manager:
                 sMatImage = cv2.imread(frame)
                 sMatImageDraw = sMatImage.copy()
                 bbox = annot_frames[i]
-                sMatImageDraw = cv2.rectangle(sMatImageDraw, (int(bbox.x1), int(bbox.y1)), (int(bbox.x2), int(bbox.y2)), (255, 255, 255), 2)
+                
+                if opencv_version == '2':
+                    cv2.rectangle(sMatImageDraw, (int(bbox.x1), int(bbox.y1)), (int(bbox.x2), int(bbox.y2)), (255, 255, 255), 2)
+                else:
+                    sMatImageDraw = cv2.rectangle(sMatImageDraw, (int(bbox.x1), int(bbox.y1)), (int(bbox.x2), int(bbox.y2)), (255, 255, 255), 2)
+
                 bbox = objTracker.track(sMatImage, objRegressor)
-                sMatImageDraw = cv2.rectangle(sMatImageDraw, (int(bbox.x1), int(bbox.y1)), (int(bbox.x2), int(bbox.y2)), (255, 0, 0), 2)
+                if opencv_version == '2':
+                    cv2.rectangle(sMatImageDraw, (int(bbox.x1), int(bbox.y1)), (int(bbox.x2), int(bbox.y2)), (255, 0, 0), 2)
+                else:
+                    sMatImageDraw = cv2.rectangle(sMatImageDraw, (int(bbox.x1), int(bbox.y1)), (int(bbox.x2), int(bbox.y2)), (255, 0, 0), 2)
+
                 cv2.imshow('Results', sMatImageDraw)
                 cv2.waitKey(10)
