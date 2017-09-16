@@ -37,4 +37,4 @@ To train your own tracker, please follow the [guide](https://github.com/nrupatun
 To test your own tracker on VOT2014, please follow the [guide](https://github.com/nrupatunga/PY-GOTURN/blob/goturn-0.1/how_to_test.md)
 
 ### Contact
-Please write to me at nrupatunga.tunga@gmail.com, if you have any suggestions or anything new functionality you like to see. 
+Please write to me at nrupatunga.tunga@gmail.com, if you have any suggestions or any new functionality you like to see. 
