@@ -1,4 +1,4 @@
-net: "TRAIN_FILE"
+net:'/home/nrupatunga/NThere/DL-Workspace/CAFFE/PY-GOTURN/nets/tracker.prototxt'
 base_lr: 0.000001
 lr_policy: "step"
 gamma: 0.1
@@ -8,7 +8,6 @@ max_iter: 450000
 momentum: 0.9
 weight_decay: 0.0005
 snapshot: 50000
-snapshot_prefix: "SOLVERSTATE_DIR/caffenet_train"
-random_seed: RANDOM_SEED
-device_id: DEVICE_ID
+snapshot_prefix: "./dump_model" # change as per your need
+device_id: 0
 solver_mode: GPU
