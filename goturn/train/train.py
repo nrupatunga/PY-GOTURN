@@ -65,7 +65,7 @@ def train_video(videos, tracker_trainer):
     frame_num_prev, image_prev, bbox_prev = video.load_annotation(ann_index)
 
     frame_num_curr, image_curr, bbox_curr = video.load_annotation(ann_index + 1)
-    tracker_trainer.train(image_prev, image_curr, bbox_prev, bbox_prev)
+    tracker_trainer.train(image_prev, image_curr, bbox_prev, bbox_curr)
 
 def main(args):
     """TODO: Docstring for main.
