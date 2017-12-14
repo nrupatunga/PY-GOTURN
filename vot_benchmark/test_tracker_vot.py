@@ -18,7 +18,7 @@ sys.path.insert(1, "goturn_module_path")   # goturn module path
 os.environ["LD_LIBRARY"] = "/usr/local/cuda-8.0/lib64"
 os.environ["PATH"] = "/home/zq/anaconda2/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
 
-from goturn.tracker.tracker import tracker
+from goturn.tracker.vot_tracker import tracker
 from goturn.logger.logger import setup_logger
 from goturn.network.regressor import regressor
 from goturn.helper.BoundingBox import BoundingBox
