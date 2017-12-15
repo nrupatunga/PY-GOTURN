@@ -65,7 +65,7 @@ class regressor:
             image_out = cv2.cvtColor(image, cv2.COLOR_BGRA2GRAY)
         elif num_channels == 3 and image.shape[2] == 4:
             image_out = cv2.cvtColor(image, cv2.COLOR_BGRA2BGR)
-        elif num_channels == 3 and image.shape[2] == 2:
+        elif num_channels == 3 and image.shape[2] == 1:
             image_out = cv2.cvtColor(image, cv2.COLOR_GRAY2BGR)
         else:
             image_out = image
