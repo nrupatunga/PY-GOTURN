@@ -1,4 +1,4 @@
-net:'/home/nrupatunga/NThere/DL-Workspace/CAFFE/PY-GOTURN/nets/tracker.prototxt'
+net:'/home/nrupatunga/Work-2017/DeepLearning/Code/PY-GOTURN/nets/tracker.prototxt'
 base_lr: 0.000001
 lr_policy: "step"
 gamma: 0.1

@@ -4,7 +4,6 @@
 # Description: loading Imagenet dataset
 
 from __future__ import print_function
-import sys
 import os
 import cv2
 import glob
@@ -13,8 +12,8 @@ import xml.etree.ElementTree as ET
 from ..logger.logger import setup_logger
 from ..helper import config
 
-
 kMaxRatio = 0.66
+
 
 class loader_imagenet:
 
@@ -35,14 +34,13 @@ class loader_imagenet:
 
         """
         logger = self.logger
-        imagenet_folder = self.imagenet_folder
         imagenet_subdirs = sorted(self.find_subfolders(self.annotations_folder))
         num_annotations = 0
         list_of_annotations_out = []
 
         for i, imgnet_sub_folder in enumerate(imagenet_subdirs):
             annotations_files = sorted(glob.glob(os.path.join(self.annotations_folder, imgnet_sub_folder, '*.xml')))
-            logger.info('Loading {}/{} - annotation file from folder = {}'.format(i+1, len(imagenet_subdirs), imgnet_sub_folder))
+            logger.info('Loading {}/{} - annotation file from folder = {}'.format(i + 1, len(imagenet_subdirs), imgnet_sub_folder))
             for ann in annotations_files:
                 list_of_annotations, num_ann_curr = self.load_annotation_file(ann)
                 num_annotations = num_annotations + num_ann_curr
@@ -57,7 +55,6 @@ class loader_imagenet:
         self.num_annotations = num_annotations
 
         return list_of_annotations_out
-        
 
     def find_subfolders(self, imagenet_folder):
         """TODO: Docstring for find_subfolders.
@@ -118,7 +115,6 @@ class loader_imagenet:
         list_annotations = images[image_num]
         random_ann = list_annotations[annotation_num]
 
-
         img_path = os.path.join(self.imagenet_folder, random_ann.image_path + '.JPEG')
 
         if config.DEBUG:
@@ -129,7 +125,6 @@ class loader_imagenet:
             random_ann.bbox.y2 = 176
             random_ann.disp_height = 375
             random_ann.disp_width = 500
-
 
         image = cv2.imread(img_path)
 

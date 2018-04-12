@@ -9,8 +9,9 @@ from regressor import regressor
 from ..helper import config
 sys.path.insert(0, config.CAFFE_PATH)
 import caffe
-from visdom import Visdom
-viz = Visdom()
+# __import__('pdb').set_trace()
+# from visdom import Visdom
+# viz = Visdom()
 
 class regressor_train:
 

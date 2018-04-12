@@ -4,7 +4,6 @@
 # Description: Image processing functions
 
 import math
-import cv2
 import numpy as np
 from ..helper.BoundingBox import BoundingBox
 
@@ -20,7 +19,7 @@ def cropPadImage(bbox_tight, image):
     roi_width = min(image.shape[1], max(1.0, math.ceil(pad_image_location.x2 - pad_image_location.x1)))
     roi_height = min(image.shape[0], max(1.0, math.ceil(pad_image_location.y2 - pad_image_location.y1)))
 
-    err = 0.000000001 # To take care of floating point arithmetic errors
+    err = 0.000000001  # To take care of floating point arithmetic errors
     cropped_image = image[int(roi_bottom + err):int(roi_bottom + roi_height), int(roi_left + err):int(roi_left + roi_width)]
     output_width = max(math.ceil(bbox_tight.compute_output_width()), roi_width)
     output_height = max(math.ceil(bbox_tight.compute_output_height()), roi_height)
@@ -31,11 +30,11 @@ def cropPadImage(bbox_tight, image):
 
     edge_spacing_x = min(bbox_tight.edge_spacing_x(), (image.shape[1] - 1))
     edge_spacing_y = min(bbox_tight.edge_spacing_y(), (image.shape[0] - 1))
-    
+
     # if output_image[int(edge_spacing_y):int(edge_spacing_y) + cropped_image.shape[0], int(edge_spacing_x):int(edge_spacing_x) + cropped_image.shape[1]].shape != cropped_image.shape :
-        # import pdb
-        # pdb.set_trace()
-        # print('debug')
+    # import pdb
+    # pdb.set_trace()
+    # print('debug')
 
     # rounding should be done to match the width and height
     output_image[int(edge_spacing_y):int(edge_spacing_y) + cropped_image.shape[0], int(edge_spacing_x):int(edge_spacing_x) + cropped_image.shape[1]] = cropped_image
@@ -74,5 +73,5 @@ def computeCropPadImageLocation(bbox_tight, image):
 
     # Padded image location in the original image
     objPadImageLocation = BoundingBox(roi_left, roi_bottom, roi_left + roi_width, roi_bottom + roi_height)
-   
+
     return objPadImageLocation

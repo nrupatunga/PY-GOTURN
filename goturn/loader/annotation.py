@@ -1,10 +1,10 @@
-# Date: Nrupatunga: Tuesday 04 July 2017 
+# Date: Nrupatunga: Tuesday 04 July 2017
 # Email: nrupatunga@whodat.com
 # Name: Nrupatunga
 # Description: annotations
 
-import sys
 from ..helper.BoundingBox import BoundingBox
+
 
 class annotation:
 

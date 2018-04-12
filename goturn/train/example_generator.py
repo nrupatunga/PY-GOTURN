@@ -11,6 +11,7 @@ import numpy as np
 
 viz = Visdom()
 
+
 class bbParams:
 
     """Docstring for bbParams. """
@@ -21,7 +22,7 @@ class bbParams:
         self.lamda_scale = lamda_scale
         self.min_scale = min_scale
         self.max_scale = max_scale
-        
+
 
 class example_generator:
 
@@ -32,7 +33,7 @@ class example_generator:
         self.lamda_shift = lamda_shift
         self.lamda_scale = lamda_scale
         self.min_scale = min_scale
-        self.max_scale= max_scale
+        self.max_scale = max_scale
         self.logger = logger
 
     def make_true_example(self):
@@ -77,8 +78,8 @@ class example_generator:
         bbox.unscale(image)
         bbox.x1, bbox.x2, bbox.y1, bbox.y2 = int(bbox.x1), int(bbox.x2), int(bbox.y1), int(bbox.y2)
 
-        image = cv2.rectangle(image, (bbox.x1, bbox.y1),(bbox.x2, bbox.y2), (0,255,0),2)
-        out = np.concatenate((target[np.newaxis, ...], image[np.newaxis,...]), axis=0)
+        image = cv2.rectangle(image, (bbox.x1, bbox.y1), (bbox.x2, bbox.y2), (0, 255, 0), 2)
+        out = np.concatenate((target[np.newaxis, ...], image[np.newaxis, ...]), axis=0)
         viz.images(np.transpose(out, [0, 3, 1, 2]), opts=dict(title='image' + str(idx), caption='How random.'))
 
     def get_default_bb_params(self):
@@ -88,7 +89,7 @@ class example_generator:
         """
         default_params = bbParams(self.lamda_shift, self.lamda_scale, self.min_scale, self.max_scale)
         return default_params
-            
+
     def make_training_example_BBShift_(self, bbParams, visualize_example=False):
         """TODO: Docstring for make_training_example_BBShift_.
         :returns: TODO
@@ -97,13 +98,12 @@ class example_generator:
         bbox_curr_gt = self.bbox_curr_gt_
         bbox_curr_shift = BoundingBox(0, 0, 0, 0)
         bbox_curr_shift = bbox_curr_gt.shift(self.img_curr_, bbParams.lamda_scale, bbParams.lamda_shift, bbParams.min_scale, bbParams.max_scale, True, bbox_curr_shift)
-        rand_search_region, rand_search_location , edge_spacing_x, edge_spacing_y = cropPadImage(bbox_curr_shift, self.img_curr_)
+        rand_search_region, rand_search_location, edge_spacing_x, edge_spacing_y = cropPadImage(bbox_curr_shift, self.img_curr_)
 
         bbox_curr_gt = self.bbox_curr_gt_
         bbox_gt_recentered = BoundingBox(0, 0, 0, 0)
         bbox_gt_recentered = bbox_curr_gt.recenter(rand_search_location, edge_spacing_x, edge_spacing_y, bbox_gt_recentered)
         bbox_gt_recentered.scale(rand_search_region)
-
         bbox_gt_scaled = bbox_gt_recentered
 
         return rand_search_region, self.target_pad_, bbox_gt_scaled
@@ -118,11 +118,10 @@ class example_generator:
 
         return image_rand_focus, target_pad, bbox_gt_scaled
 
-
     def reset(self, bbox_curr, bbox_prev, img_curr, img_prev):
         """TODO: to be defined1. """
 
-        target_pad, _, _, _ =  cropPadImage(bbox_prev, img_prev)
+        target_pad, _, _, _ = cropPadImage(bbox_prev, img_prev)
         self.img_curr_ = img_curr
         self.bbox_curr_gt_ = bbox_curr
         self.bbox_prev_gt_ = bbox_prev

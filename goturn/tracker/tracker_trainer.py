@@ -3,8 +3,8 @@
 # Name: Nrupatunga
 # Description: tracker trainer
 
-from ..train.example_generator import example_generator
 from ..helper import config
+
 
 class tracker_trainer:
     """tracker trainer class"""
@@ -38,7 +38,7 @@ class tracker_trainer:
 
         """
         self.regressor_train_.train(self.images_batch_, self.targets_batch_,
-                self.bbox_gt_scaled_batch_)
+                                    self.bbox_gt_scaled_batch_)
 
     def make_training_examples(self):
         """TODO: Docstring for make_training_examples.
@@ -70,7 +70,6 @@ class tracker_trainer:
 
             if num_use < 0:
                 logger.error('Error: num_use = {}', num_use)
-
 
             self.images_batch_.extend(self.images[0:num_use])
             self.targets_batch_.extend(self.targets[0:num_use])

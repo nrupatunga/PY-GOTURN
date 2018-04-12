@@ -3,7 +3,8 @@
 # Name: Nrupatunga
 # Description: Training the tracker
 
-
+from ..helper import config
+import caffe
 import argparse
 import setproctitle
 from ..logger.logger import setup_logger
@@ -12,27 +13,24 @@ from ..loader.loader_alov import loader_alov
 from ..train.example_generator import example_generator
 from ..network.regressor_train import regressor_train
 from ..tracker.tracker_trainer import tracker_trainer
-import sys
-sys.path.insert(0, '/usr/local/caffe/python')
 import os
-import caffe
 import numpy as np
-
 
 setproctitle.setproctitle('TRAIN_TRACKER_IMAGENET_ALOV')
 logger = setup_logger(logfile=None)
+logger.info('Caffe path = {}'.format(config.CAFFE_PATH))
 
 ap = argparse.ArgumentParser()
-ap.add_argument("-imagenet", "--imagenet", required = True, help = "Path to ImageNet folder")
-ap.add_argument("-alov", "--alov", required = True, help = "Path to Alov folder")
-ap.add_argument("-init_caffemodel", "--init_caffemodel", required = True, help = "Path to caffe Init model")
-ap.add_argument("-train_prototxt", "--train_prototxt", required = True, help = "train prototxt")
-ap.add_argument("-solver_prototxt", "--solver_prototxt", required = True, help = "solver prototxt")
-ap.add_argument("-lamda_shift", "--lamda_shift", required = True, help = "lamda shift")
-ap.add_argument("-lamda_scale", "--lamda_scale", required = True, help = "lamda scale ")
-ap.add_argument("-min_scale", "--min_scale", required = True, help = "min scale")
-ap.add_argument("-max_scale", "--max_scale", required = True, help = "max scale")
-ap.add_argument("-gpu_id", "--gpu_id", required = True, help = "gpu id")
+ap.add_argument("-imagenet", "--imagenet", required=True, help="Path to ImageNet folder")
+ap.add_argument("-alov", "--alov", required=True, help="Path to Alov folder")
+ap.add_argument("-init_caffemodel", "--init_caffemodel", required=True, help="Path to caffe Init model")
+ap.add_argument("-train_prototxt", "--train_prototxt", required=True, help="train prototxt")
+ap.add_argument("-solver_prototxt", "--solver_prototxt", required=True, help="solver prototxt")
+ap.add_argument("-lamda_shift", "--lamda_shift", required=True, help="lamda shift")
+ap.add_argument("-lamda_scale", "--lamda_scale", required=True, help="lamda scale ")
+ap.add_argument("-min_scale", "--min_scale", required=True, help="min scale")
+ap.add_argument("-max_scale", "--max_scale", required=True, help="max scale")
+ap.add_argument("-gpu_id", "--gpu_id", required=True, help="gpu id")
 
 
 RANDOM_SEED = 800
@@ -50,6 +48,7 @@ def train_image(image_loader, images, tracker_trainer):
     image, bbox = image_loader.load_annotation(curr_image, curr_ann)
     tracker_trainer.train(image, image, bbox, bbox)
 
+
 def train_video(videos, tracker_trainer):
     """TODO: Docstring for train_video.
     """
@@ -66,6 +65,7 @@ def train_video(videos, tracker_trainer):
 
     frame_num_curr, image_curr, bbox_curr = video.load_annotation(ann_index + 1)
     tracker_trainer.train(image_prev, image_curr, bbox_prev, bbox_curr)
+
 
 def main(args):
     """TODO: Docstring for main.
@@ -97,7 +97,7 @@ def main(args):
 
     # create example generator and setup the network
     objExampleGen = example_generator(float(args['lamda_shift']), float(args['lamda_scale']), float(args['min_scale']), float(args['max_scale']), logger)
-    objRegTrain = regressor_train(args['train_prototxt'], args['init_caffemodel'], int(args['gpu_id']), args['solver_prototxt'], logger) 
+    objRegTrain = regressor_train(args['train_prototxt'], args['init_caffemodel'], int(args['gpu_id']), args['solver_prototxt'], logger)
     objTrackTrainer = tracker_trainer(objExampleGen, objRegTrain, logger)
 
     while objTrackTrainer.num_batches_ < kNumBatches:

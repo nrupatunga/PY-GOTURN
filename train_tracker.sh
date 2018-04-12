@@ -1,5 +1,5 @@
-IMAGENET_FOLDER='/media/nrupatunga/LAPTOP_BACKUP/Datasets/ILSVRC2014'
-ALOV_FOLDER='/media/nrupatunga/LAPTOP_BACKUP/Datasets/ALOV'
+IMAGENET_FOLDER='/media/nrupatunga/data/datasets/ILSVRC2014/'
+ALOV_FOLDER='/media/nrupatunga/data/datasets/VOT-extract/'
 INIT_CAFFEMODEL='./nets/tracker_init.caffemodel'
 TRACKER_PROTO='./nets/tracker.prototxt'
 SOLVER_PROTO='./nets/solver.prototxt'

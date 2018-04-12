@@ -5,9 +5,11 @@
 
 import cv2
 
+
 class frame:
 
     """Docstring for frame. """
+
     def __init__(self, frame_num, bbox):
         """TODO: to be defined1. """
         self.frame_num = frame_num
@@ -33,12 +35,11 @@ class video:
         frame_num = ann_frame.frame_num
         bbox = ann_frame.bbox
 
-        video_path = self.video_path
-        image_files =  self.all_frames
+        image_files = self.all_frames
 
         assert(len(image_files) > 0)
         assert(frame_num < len(image_files))
-        
+
         image = cv2.imread(image_files[frame_num])
         return frame_num, image, bbox
 

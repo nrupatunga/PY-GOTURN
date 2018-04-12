@@ -12,7 +12,5 @@ class tracker_trainer:
         """TODO: to be defined1. """
 
         self.example_generator_ = example_generator
-        self.regressor_train_= regressor_train
+        self.regressor_train_ = regressor_train
         self.num_batches_ = 0
-
-        

@@ -8,6 +8,7 @@ import math
 
 RAND_MAX = 2147483647
 
+
 def sample_rand_uniform():
     """TODO: Docstring for sample_rand_uniform.
 
@@ -16,6 +17,7 @@ def sample_rand_uniform():
 
     """
     return (random.randint(0, RAND_MAX) + 1) * 1.0 / (RAND_MAX + 2)
+
 
 def sample_exp_two_sides(lambda_):
     """TODO: Docstring for sample_exp_two_sides.

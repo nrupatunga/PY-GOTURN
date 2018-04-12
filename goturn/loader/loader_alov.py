@@ -3,15 +3,10 @@
 # Name: Nrupatunga
 # Description: loading Alov dataset
 
-import sys
-# sys.path.append('../logger/')
-# sys.path.append('../helper/')
 import os
 import glob
-from annotation import annotation
 from video import video
 from video import frame
-import xml.etree.ElementTree as ET
 from ..logger.logger import setup_logger
 from ..helper.BoundingBox import BoundingBox
 
@@ -37,14 +32,11 @@ class loader_alov:
 
         """
         logger = self.logger
-        alov_folder = self.alov_folder
         alov_subdirs = sorted(self.find_subfolders(self.annotations_folder))
-        num_annotations = 0
-        dict_list_of_annotations = {}
 
         for i, alov_sub_folder in enumerate(alov_subdirs):
             annotations_files = sorted(glob.glob(os.path.join(self.annotations_folder, alov_sub_folder, '*.ann')))
-            logger.info('Loading {:>3} of {:>3} - annotation file from folder = {:>4}'.format(i+1, len(alov_subdirs), alov_sub_folder))
+            logger.info('Loading {:>3} of {:>3} - annotation file from folder = {:>4}'.format(i + 1, len(alov_subdirs), alov_sub_folder))
 
             for ann in annotations_files:
                 self.load_annotation_file(alov_sub_folder, ann)
@@ -68,7 +60,7 @@ class loader_alov:
 
         with open(annotation_file, 'r') as f:
             data = f.read().rstrip().split('\n')
-            for bb in data: 
+            for bb in data:
                 frame_num, ax, ay, bx, by, cx, cy, dx, dy = bb.split()
                 frame_num, ax, ay, bx, by, cx, cy, dx, dy = int(frame_num), float(ax), float(ay), float(bx), float(by), float(cx), float(cy), float(dx), float(dy)
 
@@ -98,7 +90,6 @@ class loader_alov:
         num_categories = len(self.category)
         category = self.category
         keys = sorted(category.keys())
-        count = 0
         for i in range(num_categories):
             category_video = category[keys[i]]
             num_videos = len(category_video)
@@ -124,7 +115,7 @@ class loader_alov:
 
         return videos
 
-        
+
 if '__main__' == __name__:
     logger = setup_logger(logfile=None)
     objLoaderAlov = loader_alov('/media/nrupatunga/data/datasets/VOT-extract/images/', '/media/nrupatunga/data/datasets/VOT-extract/gt/', logger)

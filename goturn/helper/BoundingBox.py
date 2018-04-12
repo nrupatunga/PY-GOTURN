@@ -5,6 +5,7 @@
 
 from ..helper.helper import sample_exp_two_sides, sample_rand_uniform
 
+
 class BoundingBox:
     """Docstring for BoundingBox. """
 
@@ -24,14 +25,14 @@ class BoundingBox:
         :returns: TODO
 
         """
-        return (self.x1 + self.x2)/2.
+        return (self.x1 + self.x2) / 2.
 
     def get_center_y(self):
         """TODO: Docstring for get_center_y.
         :returns: TODO
 
         """
-        return (self.y1 + self.y2)/2.
+        return (self.y1 + self.y2) / 2.
 
     def compute_output_height(self):
         """TODO: Docstring for compute_output_height.
@@ -40,7 +41,7 @@ class BoundingBox:
         """
         bbox_height = self.y2 - self.y1
         output_height = self.kContextFactor * bbox_height
-        
+
         return max(1.0, output_height)
 
     def compute_output_width(self):
@@ -50,7 +51,7 @@ class BoundingBox:
         """
         bbox_width = self.x2 - self.x1
         output_width = self.kContextFactor * bbox_width
-        
+
         return max(1.0, output_width)
 
     def edge_spacing_x(self):
@@ -171,7 +172,6 @@ class BoundingBox:
             new_width = max(1.0, min((image.shape[1] - 1), new_width))
             num_tries_width = num_tries_width + 1
 
-
         new_height = -1
         num_tries_height = 0
         while ((new_height < 0) or (new_height > image.shape[0] - 1)) and (num_tries_height < kMaxNumTries):
@@ -181,10 +181,9 @@ class BoundingBox:
                 rand_num = sample_rand_uniform()
                 height_scale_factor = rand_num * (max_scale - min_scale) + min_scale
 
-            new_height = height * ( 1 + height_scale_factor )
+            new_height = height * (1 + height_scale_factor)
             new_height = max(1.0, min((image.shape[0] - 1), new_height))
             num_tries_height = num_tries_height + 1
-
 
         first_time_x = True
         new_center_x = -1
