@@ -6,8 +6,8 @@ changes on the development branch (goturn-dev).
 
 - [X] Code clean up
 
-- [ ] Try to add much better interface for easy debugging, to understand different parts of
-the code
+- [ ] Try to add much better interface for easy debugging -
+Visualization of training, understanding different modules of the code.
 
 - [ ] Documentation or blog on the code.
 
