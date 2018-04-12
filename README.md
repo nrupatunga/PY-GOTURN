@@ -2,7 +2,7 @@
 
 ### News
 I'm back on working on this codebase again, can expect the following
-changes on the development branch (goturn-dev).
+changes on the development branch **goturn-dev**
 
 - [X] Code clean up
 
