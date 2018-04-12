@@ -4,12 +4,12 @@
 I'm back on working on this codebase again, can expect the following
 changes on the development branch (goturn-dev).
 
-- [] Code clean up
+- [X] Code clean up
 
-- [] Try to add much better interface for easy debugging, to understand different parts of
+- [ ] Try to add much better interface for easy debugging, to understand different parts of
 the code
 
-- [] Documentation or blog on the code.
+- [ ] Documentation or blog on the code.
 
 **NOTE:** If you wish to contribute, please ping me
 
