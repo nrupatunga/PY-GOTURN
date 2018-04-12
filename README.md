@@ -11,7 +11,8 @@ the code
 
 - [ ] Documentation or blog on the code.
 
-**NOTE:** If you wish to contribute, please ping me
+**NOTE:** Please switch to **goturn-0.1** branch to try out stable
+version. 
 
 ---
 
