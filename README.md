@@ -13,6 +13,8 @@ the code
 
 **NOTE:** If you wish to contribute, please ping me
 
+---
+
 This is the **python** implementation of **GOTURN: Generic Object Tracking Using Regression Networks.**
 
 **[Learning to Track at 100 FPS with Deep Regression Networks](http://davheld.github.io/GOTURN/GOTURN.html)**,
