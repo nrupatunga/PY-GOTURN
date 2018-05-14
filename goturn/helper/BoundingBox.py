@@ -20,6 +20,17 @@ class BoundingBox:
         self.kContextFactor = 2
         self.kScaleFactor = 10
 
+    def print_bb(self):
+        """TODO: Docstring for print_bb.
+        :returns: TODO
+
+        """
+        print('------Bounding-box-------')
+        print('(x1, y1): ({}, {})'.format(self.x1, self.y1))
+        print('(x2, y2): ({}, {})'.format(self.x2, self.y2))
+        print('(w, h)  : ({}, {})'.format(self.x2 - self.x1 + 1, self.y2 - self.y1 + 1))
+        print('--------------------------')
+
     def get_center_x(self):
         """TODO: Docstring for get_center_x.
         :returns: TODO
@@ -189,10 +200,10 @@ class BoundingBox:
         new_center_x = -1
         num_tries_x = 0
 
-        while (first_time_x or (new_center_x < center_x - width * self.kContextFactor / 2)
+        while ((first_time_x or (new_center_x < center_x - width * self.kContextFactor / 2)
                 or (new_center_x > center_x + width * self.kContextFactor / 2)
                 or ((new_center_x - new_width / 2) < 0)
-                or ((new_center_x + new_width / 2) > image.shape[1])
+                or ((new_center_x + new_width / 2) > image.shape[1]))
                 and (num_tries_x < kMaxNumTries)):
 
             if shift_motion_model:
@@ -209,10 +220,10 @@ class BoundingBox:
         new_center_y = -1
         num_tries_y = 0
 
-        while (first_time_y or (new_center_y < center_y - height * self.kContextFactor / 2)
+        while ((first_time_y or (new_center_y < center_y - height * self.kContextFactor / 2)
                 or (new_center_y > center_y + height * self.kContextFactor / 2)
                 or ((new_center_y - new_height / 2) < 0)
-                or ((new_center_y + new_height / 2) > image.shape[0])
+                or ((new_center_y + new_height / 2) > image.shape[0]))
                 and (num_tries_y < kMaxNumTries)):
 
             if shift_motion_model:
