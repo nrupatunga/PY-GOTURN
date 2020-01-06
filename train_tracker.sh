@@ -1,10 +1,10 @@
-IMAGENET_FOLDER='/media/nrupatunga/data/datasets/ILSVRC2014/'
-ALOV_FOLDER='/media/nrupatunga/data/datasets/VOT-extract/'
+IMAGENET_FOLDER='/media/nthere/datasets/ISLVRC2014_Det/dummy'
+ALOV_FOLDER='/media/nthere/datasets/ALOV/'
 INIT_CAFFEMODEL='./nets/tracker_init.caffemodel'
 TRACKER_PROTO='./nets/tracker.prototxt'
 SOLVER_PROTO='./nets/solver.prototxt'
 
-python -m goturn.train.train \
+python2 -m goturn.train.train \
 --imagenet $IMAGENET_FOLDER \
 --alov $ALOV_FOLDER \
 --init_caffemodel $INIT_CAFFEMODEL \
@@ -14,4 +14,4 @@ python -m goturn.train.train \
 --lamda_scale 15 \
 --min_scale -0.4 \
 --max_scale 0.4 \
---gpu_id 0 
+--gpu_id 1
