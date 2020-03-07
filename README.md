@@ -1,24 +1,18 @@
 # PY-GOTURN
 
-### News
-I'm back on working on this codebase again, can expect the following
-changes on the development branch **goturn-dev**
+### Update
+There wont be any new updates to this repository as official Caffe is no longer maintained.
 
-- [X] Code clean up
+Instead, please refer to the **PyTorch** implementation [here](https://github.com/nrupatunga/pytorch-goturn).
 
-- [ ] Bug fixes, if any
-
-- [ ] Try to add much better interface for easy debugging -
-Visualization of training, understanding different modules of the code.
-
-- [ ] Documentation or blog on the code.
+---
 
 **NOTE:** Please switch to **goturn-0.1** branch to try out stable
 version. 
 
 ---
 
-This is the **python** implementation of **GOTURN: Generic Object Tracking Using Regression Networks.**
+This is the **python + Caffe** implementation of **GOTURN: Generic Object Tracking Using Regression Networks.**
 
 **[Learning to Track at 100 FPS with Deep Regression Networks](http://davheld.github.io/GOTURN/GOTURN.html)**,
 <br>
