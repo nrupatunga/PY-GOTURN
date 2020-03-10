@@ -3,7 +3,7 @@
 ### Update
 There wont be any new updates to this repository as official Caffe is no longer maintained.
 
-Instead, please refer to the **PyTorch** implementation [here](https://github.com/nrupatunga/pytorch-goturn).
+Instead, I will be releasing the PyTorch version of it, by the end of March!
 
 ---
 
