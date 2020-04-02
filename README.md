@@ -3,8 +3,7 @@
 ### Update
 There wont be any new updates to this repository as official Caffe is no longer maintained.
 
-Instead, there will be a PyTorch version coming soon! I will have an
-update by March end.
+Instead, try [PyTorch](https://github.com/nrupatunga/goturn-pytorch) version here.
 
 ---
 
