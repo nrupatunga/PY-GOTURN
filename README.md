@@ -2,8 +2,14 @@
 
 ### Update
 There wont be any new updates to this repository as official Caffe is no longer maintained.
+But as long as you compile Caffe successfully, this repository should work as is. 
 
 Instead, try [PyTorch](https://github.com/nrupatunga/goturn-pytorch) version here.
+
+Some of the others' work using this repository: 
+
+- [Detection and Tracking](https://github.com/tau-adl/Detection_Tracking_JetsonTX2)
+- [Another Goturn implementation](https://github.com/amoudgl/pygoturn)
 
 ---
 
